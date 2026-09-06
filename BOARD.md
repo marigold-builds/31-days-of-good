@@ -36,7 +36,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | --- | --- | --- | --- | --- | --- |
 | W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | doing | Brief: `.superpowers/sdd/2026-09-06-scaffolds-and-site/task-6-brief.md`; code complete in brief; create in `/Users/dom/Documents/Coding/marigold-templates/template-python-cli/` |
 | W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | doing | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9; Opus 5 controller, sonnet impl |
-| W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | doing | Brief `task-8-brief.md`; CI includes a self-test job; Opus 5 controller, sonnet impl |
+| W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | open | Brief `task-10-brief.md`; depends on W6–W9 (needs the template names live) |
 | W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | open | After W10; use superpowers:requesting-code-review's code-reviewer; triage deferred minors listed under Observed |
@@ -61,3 +61,4 @@ Findings carry `path:line @ sha`. A finding without a sha is unverified.
 | O5 | Deferred minor: `tilePng` test checks the PNG magic only, not dimensions | `site-build/test/tile.test.js` @ 47b47ad | add a width/height check when convenient |
 | O6 | **False-finding trap:** opening `site/index.html` via a bare `file://` URL in the Browser pane renders with no CSS. Serve `site/` over HTTP (the build assumes `BASE_URL=/31-days-of-good/`, so symlink it under that path) before judging styling. | Browser pane, 2026-09-06 | cost one implementer a detour |
 | O7 | Critic scores after fix round: tile 8/10, index 7/10 with the "Planned" labels removed since | `.superpowers/sdd/.../progress.md` | re-score at W11 if desired |
+| O8 | Deferred minor: `.editorconfig`'s `[*.{yml,yaml,json,md}]` block is redundant now the root block is also `indent_size = 2` | `template-node-action/.editorconfig:9` @ 5cc2f2f | leftover from Task 6's Python structure where the two differed; zero functional effect |
