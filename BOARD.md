@@ -11,6 +11,7 @@ Announce yourself when you start; clear your row when you stop. Everyone works i
 | Session | Working in | On | Since |
 | --- | --- | --- | --- |
 | Fable (Claude Code, Dom's Mac) | main checkout, DoGood | W1–W5 done; handing over W6–W10 | 2026-09-06 |
+| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W11 final review | 2026-09-06 |
 
 ## Decided
 
@@ -38,7 +39,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | closed 05c0051 | docs, README and daily process now describe the live site and templates; CI and Pages green |
-| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | blocked | needs a Fable session for the final whole-branch review. All ten tasks are closed; the SDD ledger and every review package are still in `.superpowers/sdd/2026-09-06-scaffolds-and-site/` — do not delete that workspace until this row closes. Triage O2–O12 |
+| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | doing | Dom authorised a Fable *subagent* for review seats, so this runs in the Opus 5 controller session rather than waiting for a Fable session; triage O2–O12 |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
 | W13 | Verify every API in `backlog/open-data-register.md` and save a fixture per SDG | impl (haiku) | 2 | open | Mechanical; one script, one fixture dir; note rate limits found |
 | W14 | Blind README reviewer and screenshot reviewer prompts, tested on an existing repo | Fable | 2 | open | `docs/06-preparation-plan.md` week 2 |
