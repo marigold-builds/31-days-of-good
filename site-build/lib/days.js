@@ -1,16 +1,12 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { wrap, TITLE_WRAP_MAX_CHARS, TITLE_MAX_LINES } from './wrap.js';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 export const SDGS = JSON.parse(readFileSync(join(ROOT, 'data', 'sdgs.json'), 'utf8'));
 const STATUSES = new Set(['planned', 'shipped', 'partial', 'missed']);
 const LOG_FILENAME = /^(\d{4})-(\d{2})-(\d{2})\.md$/;
 const HTTPS_URL = /^https:\/\//;
-// Two lines at 20 characters each is the most tile.js's title wrap can carry
-// (see the TITLE_WRAP_MAX_CHARS comment in lib/tile.js) without dropping
-// characters, so anything longer is rejected here rather than silently
-// truncated on the tile.
-const NAME_MAX_LENGTH = 40;
 
 function unquote(v) {
   if (v.length >= 2) {
@@ -73,8 +69,19 @@ export function loadDays({ calendarPath, logDir }) {
         throw new Error(`Log file "${f}": filename date does not match calendar.json's date "${expectedDate}" for day ${day}`);
       }
 
-      if (meta.name && meta.name.length > NAME_MAX_LENGTH) {
-        throw new Error(`Log file "${f}": name "${meta.name}" is longer than the ${NAME_MAX_LENGTH}-character tile limit`);
+      if (meta.name) {
+        // Run the name through the exact wrap() the tile renderer uses
+        // (lib/tile.js's layoutTitle), rather than a character count: a
+        // count cannot tell whether a multi-word name will actually wrap
+        // to fit, only whether it's short. Two 10-character words plus a
+        // space is 21 characters and wraps to two lines fine; three
+        // 10-character words is 32 characters — comfortably under a naive
+        // 40-character cap — but needs three lines and would have its
+        // third word silently dropped by the renderer.
+        const titleLines = wrap(meta.name, TITLE_WRAP_MAX_CHARS);
+        if (titleLines.length > TITLE_MAX_LINES) {
+          throw new Error(`Log file "${f}": day ${day} name "${meta.name}" needs ${titleLines.length} lines to fit the tile at ${TITLE_WRAP_MAX_CHARS} characters per line (max ${TITLE_MAX_LINES}); shorten it`);
+        }
       }
       checkUrl(meta.repo, 'repo', f);
       checkUrl(meta.demo, 'demo', f);

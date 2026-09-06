@@ -127,7 +127,28 @@ test('SDGS has 17 entries with colours', () => {
 test('loadDays throws when name is longer than the tile can carry', () => {
   const logDir = mkdtempSync(join(tmpdir(), 'log-'));
   writeFileSync(join(logDir, '2026-10-12.md'), `---\nday: 12\nname: ${'x'.repeat(41)}\nstatus: shipped\n---\nbody`);
-  assert.throws(() => loadDays({ calendarPath: CAL, logDir }), /40|name/);
+  assert.throws(() => loadDays({ calendarPath: CAL, logDir }), /name/);
+});
+
+// Re-reviewer's reproduction: a 32-character, three-word name that is well
+// under any plausible character cap (the old NAME_MAX_LENGTH was 40) but
+// needs three wrapped lines at 20 characters each, so the tile renderer
+// used to drop its third word silently. Validation must run the real
+// wrap() instead of counting characters, so this is rejected at build time.
+test('loadDays rejects a multi-word name that needs three wrapped lines, even though it is under 40 characters', () => {
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  const name = 'aaaaaaaaaa bbbbbbbbbb cccccccccc'; // 32 chars, three 10-char words
+  assert.equal(name.length, 32);
+  writeFileSync(join(logDir, '2026-10-13.md'), `---\nday: 13\nname: ${name}\nstatus: shipped\n---\nbody`);
+  assert.throws(() => loadDays({ calendarPath: CAL, logDir }), /name|lines/);
+});
+
+test('loadDays accepts a multi-word name that wraps to exactly two lines', () => {
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  const name = 'aaaaaaaaaa bbbbbbbbbb'; // 21 chars, two 10-char words - wraps to exactly two lines
+  writeFileSync(join(logDir, '2026-10-14.md'), `---\nday: 14\nname: ${name}\nstatus: shipped\n---\nbody`);
+  const days = loadDays({ calendarPath: CAL, logDir });
+  assert.equal(days[13].name, name);
 });
 
 test('every SDG colour is a valid 6-digit hex code', () => {

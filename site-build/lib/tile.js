@@ -1,5 +1,6 @@
 import { Resvg } from '@resvg/resvg-js';
 import { SDGS } from './days.js';
+import { wrap, TITLE_WRAP_MAX_CHARS, TITLE_MAX_LINES } from './wrap.js';
 
 const MARIGOLD = '#F4A300';
 const FONT = 'system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
@@ -9,32 +10,19 @@ export function escapeXml(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 }
 
-export function wrap(text, maxChars) {
-  const words = String(text).split(/\s+/).filter(Boolean)
-    // 'u' flag: without it, {1,n} counts UTF-16 code units, and an astral
-    // character (e.g. an emoji) is two code units, so a split can land
-    // inside a surrogate pair and produce invalid XML.
-    .flatMap(w => [...w].length > maxChars ? w.match(new RegExp(`(.{1,${maxChars}})`, 'gu')) : [w]);
-  const lines = [];
-  let line = '';
-  for (const w of words) {
-    if ((line + ' ' + w).trim().length > maxChars && line) { lines.push(line); line = w; }
-    else line = (line + ' ' + w).trim();
-  }
-  if (line) lines.push(line);
-  return lines.slice(0, 3);
-}
+export { wrap };
 
 const STATUS_LABEL = { planned: 'Planned', shipped: 'Shipped', partial: 'Shipped, reduced scope', missed: 'Missed' };
 
 // A live tile showed an 18-character name already spanning x=80->930 of the
 // 1040px usable width (x=80 to x=1120) at 88px bold; anything past ~22
 // characters runs off the edge. Wrap above 20 chars (before that happens)
-// into two lines at a smaller size. `name` is capped at 40 characters in
-// loadDays (see lib/days.js), so wrap(title, 20) always yields at most two
-// full lines with nothing dropped.
-const TITLE_WRAP_THRESHOLD = 20;
-const TITLE_WRAP_MAX_CHARS = 20;
+// into two lines at a smaller size, using the same wrap() and width that
+// lib/days.js validates a log's `name` against at build time — so a name
+// that reaches this function is already guaranteed to fit in
+// TITLE_MAX_LINES. See the throw below: it is a defence against that
+// guarantee being wrong or bypassed, not an expected path.
+const TITLE_WRAP_THRESHOLD = TITLE_WRAP_MAX_CHARS;
 const TITLE_FONT_SIZE = 88;
 const TITLE_FONT_SIZE_WRAPPED = 56;
 const TITLE_LINE_HEIGHT = 60;
@@ -43,7 +31,13 @@ const TITLE_Y_WRAPPED = 205;
 
 function layoutTitle(title) {
   const wrapped = [...String(title)].length > TITLE_WRAP_THRESHOLD;
-  const lines = wrapped ? wrap(title, TITLE_WRAP_MAX_CHARS).slice(0, 2) : [String(title)];
+  const lines = wrapped ? wrap(title, TITLE_WRAP_MAX_CHARS) : [String(title)];
+  if (lines.length > TITLE_MAX_LINES) {
+    // loadDays validates every name against this same wrap() before a build
+    // ever reaches here, so this means that guard was skipped or disagrees
+    // with this function — fail loudly rather than silently drop a line.
+    throw new Error(`Tile title "${title}" needs ${lines.length} lines to wrap at ${TITLE_WRAP_MAX_CHARS} characters each; loadDays should have rejected this name`);
+  }
   return {
     lines,
     fontSize: wrapped ? TITLE_FONT_SIZE_WRAPPED : TITLE_FONT_SIZE,

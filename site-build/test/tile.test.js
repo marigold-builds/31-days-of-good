@@ -101,3 +101,25 @@ test('a short title (at or under the wrap threshold) still renders at full size 
   assert.equal((svg.match(/<tspan/g) || []).length, 0, 'short titles render as a single <text>, no tspans needed');
   assert.match(svg, /font-size="88"[^>]*>walkshed</);
 });
+
+// Re-reviewer's reproduction case: a 32-character, three-word name that
+// slice(0, 2) used to truncate to two lines, silently dropping the third
+// word. loadDays now rejects this name before a build ever reaches
+// tileSvg, but tileSvg must not have a silent path of its own: if a name
+// that needs more than two lines reaches it anyway, it must throw, not
+// render an incomplete title.
+test('a title that needs three lines throws instead of silently dropping the third', () => {
+  const threeLineName = 'aaaaaaaaaa bbbbbbbbbb cccccccccc';
+  assert.throws(
+    () => tileSvg({ ...day, name: threeLineName, tagline: null, status: 'shipped' }),
+    /needs 3 lines/
+  );
+});
+
+test('a title that wraps to exactly two lines renders both lines in full, nothing dropped', () => {
+  const twoLineName = 'aaaaaaaaaa bbbbbbbbbb'; // 21 chars, two 10-char words
+  const svg = tileSvg({ ...day, name: twoLineName, tagline: null, status: 'shipped' });
+  assert.equal((svg.match(/<tspan/g) || []).length, 2, 'expected exactly two title lines');
+  assert.match(svg, />aaaaaaaaaa</);
+  assert.match(svg, />bbbbbbbbbb</);
+});
