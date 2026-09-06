@@ -35,7 +35,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | id | item | owner | pri | state | note |
 | --- | --- | --- | --- | --- | --- |
 | W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | closed 47edae0 | `marigold-builds/template-python-cli` live, `is_template`, CI green; sha is in that repo |
-| W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | doing | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9; Opus 5 controller, sonnet impl |
+| W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | closed 33f2885 | `marigold-builds/template-web-static` live, `is_template`, Pages green, subpath assets all 200; sha is in that repo |
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | open | Brief `task-10-brief.md`; depends on W6–W9 (needs the template names live) |
@@ -63,3 +63,5 @@ Findings carry `path:line @ sha`. A finding without a sha is unverified.
 | O7 | Critic scores after fix round: tile 8/10, index 7/10 with the "Planned" labels removed since | `.superpowers/sdd/.../progress.md` | re-score at W11 if desired |
 | O8 | Deferred minor: `.editorconfig`'s `[*.{yml,yaml,json,md}]` block is redundant now the root block is also `indent_size = 2` | `template-node-action/.editorconfig:9` @ 5cc2f2f | leftover from Task 6's Python structure where the two differed; zero functional effect |
 | O9 | Deferred minor: `uv.lock` is committed although the brief neither listed nor ignored it; it pins `name = "tool"`, which every repo cloned from the template renames | `template-python-cli/uv.lock` @ 47edae0 | ruled harmless for now (`uv run` re-resolves; CI passes no `--frozen`/`--locked`); the Node templates are dependency-free so there is no cross-template inconsistency. W11 decides whether templates ship lockfiles as house style |
+| O10 | Deferred minor: same redundant `[*.{yml,yaml,json,md}]` `.editorconfig` block as O8, in the second template | `template-web-static/.editorconfig:9` @ 33f2885 | fix both templates together or neither; zero functional effect |
+| O11 | Deferred minor: service-worker registration in `app.js` and the `fetch` handler in `sw.js` have no `.catch`/offline fallback, so a failed registration or a cache-miss-while-offline surfaces an unhandled rejection | `template-web-static/app.js`, `sw.js` @ 33f2885 | inherited verbatim from the plan's own code, not implementer drift; every project cloned from the template inherits it, so worth fixing at W11 |
