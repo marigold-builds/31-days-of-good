@@ -66,7 +66,7 @@ Hard stop at the end of the budget. If the project is not complete, ship the sco
 1. **Release (15 min).** Tag v0.1.0, GitHub release with notes. No package registries; install instructions use the git URL or a release asset.
 2. **Hand-off pack (20 min).** 3–5 good-first-issues with enough context to be picked up cold. A "Looking for a steward" section in the README. Hacktoberfest topic on the repo.
 3. **Launch pack (35 min).** From [../templates/launch-post.md](../templates/launch-post.md): one long-form post (dev.to / programme site), one short post per channel, one screenshot or GIF, alt text, hashtags. All go into the day's **queue PR** against the programme repo; the pipeline posts them when Dom merges. Nothing is posted directly.
-4. **Programme site update (10 min).** Add the day's tile to the calendar with status, links, and SDG icon.
+4. **Programme site update (10 min).** Add the day's tile to the calendar with status, links, and SDG colour.
 5. **Retro (10 min).** From [../templates/retro.md](../templates/retro.md): what shipped, what was cut, time actually spent per phase, what to change tomorrow. Appended to the day's log entry. Every retro feeds a running `docs/lessons.md`.
 6. **Follow-ups (10 min).** For the tools launched seven and fourteen nights ago: record repo traffic (views, uniques, clones), issues and PRs from others, stars, requester feedback and confirmed use in their log entries. A tool with no signal at fourteen days gets a short public note: "nobody used this; my best guess why". Post the "Built" template on the originating request issue for anything that shipped last night for a request.
 

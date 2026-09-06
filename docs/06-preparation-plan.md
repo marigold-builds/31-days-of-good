@@ -13,8 +13,8 @@ October only works if September removes every decision and every setup task from
 ## Week 2 · 14–20 Sep · Build the machine
 
 - [x] **Project scaffold template repo:** licence, README template, CI (tests on push), issue templates, CONTRIBUTING, SDG badge slot, `fixtures/` convention, release workflow. One for a Python CLI/library, one for a static web tool, one for a Node library or GitHub Action. Live as `marigold-builds/template-python-cli`, `marigold-builds/template-web-static`, `marigold-builds/template-node-action`.
-- [x] **Programme site:** static, one page, 31 tiles, daily log, digest archive, disclosure footer. Deployed to GitHub Pages or equivalent. Live at https://marigold-builds.github.io/31-days-of-good/.
-- [ ] **Tile and social card generator:** designed once using the critic loop from [08-article-evaluation.md](08-article-evaluation.md); rendered automatically from the day's brief.
+- [ ] **Programme site:** static, one page, 31 tiles, daily log, digest archive, disclosure footer. Deployed to GitHub Pages or equivalent. Live at https://marigold-builds.github.io/31-days-of-good/. Digest archive not yet built; everything else on this line is live.
+- [x] **Tile and social card generator:** designed once using the critic loop from [08-article-evaluation.md](08-article-evaluation.md); rendered automatically from the day's brief.
 - [ ] **Publish pipeline:** GitHub Action that, on merge of a queue PR, posts to Bluesky (AT Protocol), Mastodon (bot-flagged account), and dev.to (API), and rebuilds the site. Tested end to end with a dry-run post Dom approves. Secrets are Dom's; the builder never handles them.
 - [ ] **Queue PR convention** so Dom's 08:00 merge takes under five minutes.
 - [ ] **Blind reviewer prompts** (README reviewer, screenshot reviewer) written and tested on an existing repo.

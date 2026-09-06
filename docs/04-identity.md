@@ -44,7 +44,7 @@ This appears in: the programme site footer, every repo README ("Built by" sectio
 
 - **Mark:** a simple marigold, geometric, single colour, works at 16px favicon size.
 - **Palette:** marigold orange `#F4A300`-ish as the identity colour; neutrals for everything else; the official SDG colour of the day as the only accent, taken from the UN icon set under its usage guidelines.
-- **Calendar tile:** 31 identical tiles, each with day number, SDG icon, project name, one-line description, status (shipped / partial / missed). This tile is also the social card for each launch, so it should be designed once and generated automatically.
+- **Calendar tile:** 31 identical tiles, each with day number, SDG number and colour (no UN icon graphics — see [07-decisions.md](07-decisions.md)), project name, one-line description, status (shipped / partial / missed). This tile is also the social card for each launch, so it should be designed once and generated automatically.
 - **Screenshots:** consistent device frame, consistent background, alt text every time.
 
 ## What Marigold is not
