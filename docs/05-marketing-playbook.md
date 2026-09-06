@@ -41,7 +41,7 @@ Why this design: the safety rules the builder runs under treat every public post
 
 ## Launch post anatomy (daily)
 
-1. **Tile image** with alt text: day number, SDG icon, project name.
+1. **Tile image** with alt text: day number, SDG number and title, project name, one-line description.
 2. **One sentence:** what it does and for whom.
 3. **One sentence:** the SDG target it serves, by number.
 4. **One sentence:** the limitation.

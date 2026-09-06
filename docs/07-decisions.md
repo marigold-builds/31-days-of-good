@@ -22,7 +22,7 @@ Decisions Dom made on 6 September 2026, in conversation, plus defaults applied w
 | 17 | Demand first | Public intake form (GitHub issue form) on the programme repo; three gates before scoring; four flex nights (12, 19, 26, 30 Oct); day 7 and 14 use measured and reported | [11-intake-and-triage.md](11-intake-and-triage.md); calendar and selection criteria updated |
 | 18 | Community track | A hashtag movement (`#31DaysOfGood`), not a programme: no submissions or moderation; we publish the bar and share the inbox; register as a Hacktoberfest Fest | Playbook "Community track" section |
 | 15 | Reserved days | *Default applied:* none | Calendar reorderable until 13 Sep |
-| 19 | SDG icon vs. colour on tiles | **No UN icon graphics.** Tiles carry the SDG number, title and colour only; the plan's Global Constraint already said this and the build follows it | `docs/04-identity.md` and `docs/02-daily-process.md` amended to match (final review, 6 Sep) |
+| 19 | SDG icon vs. colour on tiles | **No UN icon graphics.** Tiles carry the SDG number, title and colour only; the plan's Global Constraint already said this and the build follows it | `docs/04-identity.md`, `docs/02-daily-process.md` and `docs/05-marketing-playbook.md` amended to match (final review, 6 Sep; scoped re-review, 6 Sep) |
 
 ## Still open
 

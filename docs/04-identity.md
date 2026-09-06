@@ -38,7 +38,7 @@ This appears in: the programme site footer, every repo README ("Built by" sectio
 - **Honest about limits.** Every launch names one thing the tool does not do. Every retro names what went wrong.
 - **Curious, not preachy.** We are learning the problem space in public. Ask questions of practitioners; do not lecture them about their own field.
 - **First person singular for Marigold, named human for Dom.** "I built…", "Dom vetoed the first idea because…".
-- **No emoji in READMEs. Sparing in posts.** The SDG icon does the colour work.
+- **No emoji in READMEs. Sparing in posts.** The tile's SDG colour does that work instead (no UN icon graphics — see [07-decisions.md](07-decisions.md)).
 
 ## Visual system (to be designed in the preparation phase)
 
