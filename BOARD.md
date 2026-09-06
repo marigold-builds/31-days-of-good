@@ -38,7 +38,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | closed 33f2885 | `marigold-builds/template-web-static` live, `is_template`, Pages green, subpath assets all 200; sha is in that repo |
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
-| W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | open | Brief `task-10-brief.md`; depends on W6–W9 (needs the template names live) |
+| W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | doing | Brief `task-10-brief.md`; W6–W9 all closed so the template names are live; Opus 5 controller, sonnet impl |
 | W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | open | After W10; use superpowers:requesting-code-review's code-reviewer; triage deferred minors listed under Observed |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
 | W13 | Verify every API in `backlog/open-data-register.md` and save a fixture per SDG | impl (haiku) | 2 | open | Mechanical; one script, one fixture dir; note rate limits found |
