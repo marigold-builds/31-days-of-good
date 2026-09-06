@@ -14,6 +14,14 @@ test('renderIndex lists every day as a tile with SDG colour and status', () => {
   assert.match(html, /data-status="planned"/);
   assert.match(html, /foia-draft/);
   assert.ok(html.includes(DISCLOSURE));
+  assert.ok(!html.includes('class="status"'));
+});
+
+test('renderIndex shows a status label for a shipped day but not a planned one', () => {
+  const shipped = { ...day, name: 'foia-draft', status: 'shipped' };
+  const html = renderIndex([day, shipped], { baseUrl: '/31-days-of-good/' });
+  assert.ok(!html.includes('class="status">Planned'));
+  assert.match(html, /class="status">Shipped</);
 });
 
 test('renderDay shows tile image, observance, links and body', () => {
@@ -31,4 +39,9 @@ test('renderDay shows tile image, observance, links and body', () => {
 test('renderDay escapes user text', () => {
   const html = renderDay({ ...day, tagline: '<script>' }, '', { baseUrl: '/' });
   assert.ok(!html.includes('<script>'));
+});
+
+test('renderDay makes og:image an absolute URL when siteOrigin is given', () => {
+  const html = renderDay(day, '', { baseUrl: '/31-days-of-good/', siteOrigin: 'https://example.org' });
+  assert.match(html, /content="https:\/\/example\.org\/31-days-of-good\/tiles\/day-02\.png"/);
 });

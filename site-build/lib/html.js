@@ -27,7 +27,7 @@ ${body}
 `;
 }
 
-export function renderIndex(days, { baseUrl }) {
+export function renderIndex(days, { baseUrl, siteOrigin = '' }) {
   const tiles = days.map((d) => {
     const colour = SDGS[d.sdg[0]].colour;
     return `<li><a class="tile" style="--sdg:${colour}" data-status="${d.status}" href="${baseUrl}day/${pad(d.day)}/">
@@ -35,7 +35,7 @@ export function renderIndex(days, { baseUrl }) {
 <div class="sdg">SDG ${d.sdg.join(' + ')} · ${esc(d.sdgTitle)}</div>
 <div class="name">${esc(d.name || d.seed)}</div>
 <div class="tagline">${esc(d.tagline || d.archetype)}</div>
-<div class="status">${STATUS[d.status]}</div>
+${d.status !== 'planned' ? `<div class="status">${STATUS[d.status]}</div>` : ''}
 </a></li>`;
   }).join('\n');
   const shipped = days.filter((d) => d.status === 'shipped' || d.status === 'partial').length;
@@ -54,7 +54,7 @@ ${tiles}
   });
 }
 
-export function renderDay(d, bodyHtml, { baseUrl }) {
+export function renderDay(d, bodyHtml, { baseUrl, siteOrigin = '' }) {
   const title = `Day ${d.day} · ${d.name || d.seed} · 31 Days of Good`;
   const img = `${baseUrl}tiles/day-${pad(d.day)}.png`;
   const links = [
@@ -64,7 +64,7 @@ export function renderDay(d, bodyHtml, { baseUrl }) {
   return layout({
     title, baseUrl,
     head: `<meta property="og:title" content="${esc(title)}">
-<meta property="og:image" content="${img}">
+<meta property="og:image" content="${siteOrigin}${img}">
 <meta property="og:description" content="${esc(d.tagline || d.archetype)}">`,
     body: `<header>
 <p class="meta"><a href="${baseUrl}">31 Days of Good</a> · Day ${d.day} of 31 · ${esc(d.date)}</p>

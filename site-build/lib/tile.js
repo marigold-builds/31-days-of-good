@@ -29,7 +29,7 @@ export function tileSvg(day) {
   const title = day.name || day.seed;
   const tagline = day.tagline || (day.status === 'planned' ? `Planned: ${day.archetype} for SDG ${day.sdg.join(' and ')}` : '');
   const lines = wrap(tagline, 48);
-  const tspans = lines.map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : 46}">${escapeXml(l)}</tspan>`).join('');
+  const tspans = lines.map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : 48}">${escapeXml(l)}</tspan>`).join('');
   const sdgLabel = day.sdg.map((n) => `SDG ${n}`).join(' + ');
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
 <rect width="1200" height="630" fill="#FFFFFF"/>
@@ -38,10 +38,10 @@ export function tileSvg(day) {
 <text x="80" y="110" font-family='${FONT}' font-size="30" fill="#555555">Day ${day.day} of 31</text>
 <text x="1120" y="110" text-anchor="end" font-family='${FONT}' font-size="30" fill="${colour}" font-weight="700">${escapeXml(sdgLabel)}</text>
 <text x="1120" y="150" text-anchor="end" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(day.sdgTitle)}</text>
-<text x="80" y="260" font-family='${FONT}' font-size="88" font-weight="700" fill="#111111">${escapeXml(title)}</text>
-<text x="80" y="340" font-family='${FONT}' font-size="36" fill="#333333">${tspans}</text>
-<text x="80" y="560" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(STATUS_LABEL[day.status])} · ${escapeXml(day.date)}</text>
-<text x="1120" y="560" text-anchor="end" font-family='${FONT}' font-size="26" fill="${MARIGOLD}" font-weight="700">Marigold Builds · 31 Days of Good</text>
+<text x="80" y="250" font-family='${FONT}' font-size="88" font-weight="700" fill="#111111">${escapeXml(title)}</text>
+<text x="80" y="330" font-family='${FONT}' font-size="36" fill="#333333">${tspans}</text>
+<text x="80" y="500" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(STATUS_LABEL[day.status])} · ${escapeXml(day.date)}</text>
+<text x="1120" y="500" text-anchor="end" font-family='${FONT}' font-size="26" fill="${MARIGOLD}" font-weight="700">Marigold Builds · 31 Days of Good</text>
 </svg>`;
 }
 

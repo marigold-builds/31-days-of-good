@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { loadDays, parseFrontMatter } from './lib/days.js';
 import { tilePng, escapeXml as esc } from './lib/tile.js';
 import { renderIndex, renderDay } from './lib/html.js';
@@ -46,13 +47,13 @@ export function markdown(md) {
   return out.join('\n');
 }
 
-export async function build({ outDir, calendarPath, logDir, baseUrl }) {
+export async function build({ outDir, calendarPath, logDir, baseUrl, siteOrigin = '' }) {
   const days = loadDays({ calendarPath, logDir });
   const files = [];
   mkdirSync(join(outDir, 'tiles'), { recursive: true });
   copyFileSync(join(HERE, 'static', 'style.css'), join(outDir, 'style.css'));
   files.push('style.css');
-  writeFileSync(join(outDir, 'index.html'), renderIndex(days, { baseUrl }));
+  writeFileSync(join(outDir, 'index.html'), renderIndex(days, { baseUrl, siteOrigin }));
   files.push('index.html');
   for (const d of days) {
     const png = join(outDir, 'tiles', `day-${pad(d.day)}.png`);
@@ -61,14 +62,15 @@ export async function build({ outDir, calendarPath, logDir, baseUrl }) {
     const body = d.logPath ? markdown(parseFrontMatter(readFileSync(join(logDir, d.logPath), 'utf8')).body) : '';
     const dir = join(outDir, 'day', pad(d.day));
     mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, 'index.html'), renderDay(d, body, { baseUrl }));
+    writeFileSync(join(dir, 'index.html'), renderDay(d, body, { baseUrl, siteOrigin }));
     files.push(`day/${pad(d.day)}/index.html`);
   }
   return { files };
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   const baseUrl = process.env.BASE_URL || '/31-days-of-good/';
-  const { files } = await build({ outDir: join(ROOT, 'site'), calendarPath: join(ROOT, 'data', 'calendar.json'), logDir: join(ROOT, 'log'), baseUrl });
+  const siteOrigin = process.env.SITE_ORIGIN || 'https://marigold-builds.github.io';
+  const { files } = await build({ outDir: join(ROOT, 'site'), calendarPath: join(ROOT, 'data', 'calendar.json'), logDir: join(ROOT, 'log'), baseUrl, siteOrigin });
   console.log(`built ${files.length} files to site/`);
 }
