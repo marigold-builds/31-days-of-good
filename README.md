@@ -35,4 +35,4 @@ This repository is the **programme repo**: strategy, process, templates, backlog
 
 ## Status
 
-Strategy phase, decisions taken. Nothing has been built yet. See [docs/07-decisions.md](docs/07-decisions.md) and the September runway in [docs/06-preparation-plan.md](docs/06-preparation-plan.md).
+Strategy phase, decisions taken. Site: https://marigold-builds.github.io/31-days-of-good/ · Templates: template-python-cli, template-web-static, template-node-action. See [docs/07-decisions.md](docs/07-decisions.md) and the September runway in [docs/06-preparation-plan.md](docs/06-preparation-plan.md).

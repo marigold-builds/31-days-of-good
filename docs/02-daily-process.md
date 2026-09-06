@@ -52,7 +52,7 @@ Output: `research/notes.md` in the day's repo. Bullet points, links, no prose po
 
 Fixed order, because the later items are what get skipped under pressure:
 
-1. **Scaffold (15 min).** Repo from the project template: licence, README stub, CI, `.editorconfig`, issue templates, `CONTRIBUTING.md`, SDG badge.
+1. **Scaffold (15 min).** Repo from the matching template (`gh repo create marigold-builds/<name> --template marigold-builds/template-<kind> --public --clone`): licence, README stub, CI, `.editorconfig`, issue templates, `CONTRIBUTING.md`, SDG badge.
 2. **Walking skeleton (30 min).** The thinnest end-to-end path that proves the data source and the output format work. If this fails, this is the moment to invoke the scope-cut ladder or switch to shortlist item two.
 3. **Build with tests first (2 h 30 min).** Red–green–refactor, small commits with clear messages. Fixtures for any external data so tests run offline.
 4. **Docs and demo (45 min).** README written for a stranger: what, why, install, one-minute quickstart, screenshot or GIF, data sources with retrieval date, limitations, SDG mapping, "built by" disclosure. Deployed demo where the project is a web thing.
