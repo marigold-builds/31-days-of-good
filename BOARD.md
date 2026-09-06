@@ -34,7 +34,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 
 | id | item | owner | pri | state | note |
 | --- | --- | --- | --- | --- | --- |
-| W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | doing | Brief: `.superpowers/sdd/2026-09-06-scaffolds-and-site/task-6-brief.md`; code complete in brief; create in `/Users/dom/Documents/Coding/marigold-templates/template-python-cli/` |
+| W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | closed 47edae0 | `marigold-builds/template-python-cli` live, `is_template`, CI green; sha is in that repo |
 | W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | doing | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9; Opus 5 controller, sonnet impl |
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
@@ -62,3 +62,4 @@ Findings carry `path:line @ sha`. A finding without a sha is unverified.
 | O6 | **False-finding trap:** opening `site/index.html` via a bare `file://` URL in the Browser pane renders with no CSS. Serve `site/` over HTTP (the build assumes `BASE_URL=/31-days-of-good/`, so symlink it under that path) before judging styling. | Browser pane, 2026-09-06 | cost one implementer a detour |
 | O7 | Critic scores after fix round: tile 8/10, index 7/10 with the "Planned" labels removed since | `.superpowers/sdd/.../progress.md` | re-score at W11 if desired |
 | O8 | Deferred minor: `.editorconfig`'s `[*.{yml,yaml,json,md}]` block is redundant now the root block is also `indent_size = 2` | `template-node-action/.editorconfig:9` @ 5cc2f2f | leftover from Task 6's Python structure where the two differed; zero functional effect |
+| O9 | Deferred minor: `uv.lock` is committed although the brief neither listed nor ignored it; it pins `name = "tool"`, which every repo cloned from the template renames | `template-python-cli/uv.lock` @ 47edae0 | ruled harmless for now (`uv run` re-resolves; CI passes no `--frozen`/`--locked`); the Node templates are dependency-free so there is no cross-template inconsistency. W11 decides whether templates ship lockfiles as house style |
