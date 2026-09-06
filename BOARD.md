@@ -11,7 +11,6 @@ Announce yourself when you start; clear your row when you stop. Everyone works i
 | Session | Working in | On | Since |
 | --- | --- | --- | --- |
 | Fable (Claude Code, Dom's Mac) | main checkout, DoGood | W1–W5 done; handing over W6–W10 | 2026-09-06 |
-| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W6–W10 | 2026-09-06 |
 
 ## Decided
 
@@ -38,8 +37,8 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | closed 33f2885 | `marigold-builds/template-web-static` live, `is_template`, Pages green, subpath assets all 200; sha is in that repo |
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
-| W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | doing | Brief `task-10-brief.md`; W6–W9 all closed so the template names are live; Opus 5 controller, sonnet impl |
-| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | open | After W10; use superpowers:requesting-code-review's code-reviewer; triage deferred minors listed under Observed |
+| W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | closed 05c0051 | docs, README and daily process now describe the live site and templates; CI and Pages green |
+| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | blocked | needs a Fable session for the final whole-branch review. All ten tasks are closed; the SDD ledger and every review package are still in `.superpowers/sdd/2026-09-06-scaffolds-and-site/` — do not delete that workspace until this row closes. Triage O2–O12 |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
 | W13 | Verify every API in `backlog/open-data-register.md` and save a fixture per SDG | impl (haiku) | 2 | open | Mechanical; one script, one fixture dir; note rate limits found |
 | W14 | Blind README reviewer and screenshot reviewer prompts, tested on an existing repo | Fable | 2 | open | `docs/06-preparation-plan.md` week 2 |
@@ -65,3 +64,4 @@ Findings carry `path:line @ sha`. A finding without a sha is unverified.
 | O9 | Deferred minor: `uv.lock` is committed although the brief neither listed nor ignored it; it pins `name = "tool"`, which every repo cloned from the template renames | `template-python-cli/uv.lock` @ 47edae0 | ruled harmless for now (`uv run` re-resolves; CI passes no `--frozen`/`--locked`); the Node templates are dependency-free so there is no cross-template inconsistency. W11 decides whether templates ship lockfiles as house style |
 | O10 | Deferred minor: same redundant `[*.{yml,yaml,json,md}]` `.editorconfig` block as O8, in the second template | `template-web-static/.editorconfig:9` @ 33f2885 | fix both templates together or neither; zero functional effect |
 | O11 | Deferred minor: service-worker registration in `app.js` and the `fetch` handler in `sw.js` have no `.catch`/offline fallback, so a failed registration or a cache-miss-while-offline surfaces an unhandled rejection | `template-web-static/app.js`, `sw.js` @ 33f2885 | inherited verbatim from the plan's own code, not implementer drift; every project cloned from the template inherits it, so worth fixing at W11 |
+| O12 | Deferred minor: `docs/06-preparation-plan.md` writes the templates as `marigold-builds/template-*` where `README.md` uses the bare names | `docs/06-preparation-plan.md:15` @ 05c0051 | cosmetic inconsistency inside one commit |
