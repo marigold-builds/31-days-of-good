@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { Resvg } from '@resvg/resvg-js';
 import { tileSvg, tilePng, escapeXml, wrap } from '../lib/tile.js';
 
 const day = { day: 6, date: '2026-10-06', sdg: [11], sdgTitle: 'Sustainable Cities and Communities',
@@ -42,4 +43,61 @@ test('wrap hard-splits a single word longer than maxChars', () => {
   const lines = wrap('x'.repeat(100), 48);
   assert.ok(lines.length >= 2);
   assert.ok(lines.every((l) => l.length <= 48));
+});
+
+test('wrap hard-split keeps astral characters intact (does not split a surrogate pair)', () => {
+  // U+1F600 is a two-code-unit astral character; without the /u flag on the
+  // hard-split regex, a {1,n} split with an odd n can land inside a
+  // surrogate pair and produce an unpaired surrogate, which is invalid in
+  // XML/SVG text. Use an odd maxChars so a naive UTF-16-unit split is
+  // guaranteed to misalign with the (even-width) surrogate pairs somewhere.
+  const emoji = '\u{1F600}'; // 😀, one grapheme, two UTF-16 code units
+  const lines = wrap(emoji.repeat(60), 47);
+  for (const line of lines) {
+    // A string built only from complete surrogate pairs has an even number
+    // of UTF-16 code units; an unpaired surrogate would make this odd.
+    assert.equal(line.length % 2, 0, `line "${line}" split a surrogate pair`);
+  }
+  const rejoined = lines.join('');
+  assert.equal([...rejoined].length, 60);
+});
+
+test('tile wraps a title over ~20 characters onto two lines and shrinks the font', () => {
+  const longName = 'a-very-long-project-name'; // 25 chars
+  // clear the tagline so its own tspans (used regardless of title length)
+  // can't be mistaken for title tspans
+  const svg = tileSvg({ ...day, name: longName, tagline: null, status: 'shipped' });
+  assert.ok((svg.match(/<tspan/g) || []).length >= 2, 'title should render as more than one tspan');
+  assert.doesNotMatch(svg, /font-size="88"[^>]*>/, 'font should step down once the title wraps');
+});
+
+test('a long title stays inside the 1200x630 canvas when rendered', () => {
+  const longName = 'x'.repeat(40); // the documented maximum name length
+  const svg = tileSvg({ ...day, name: longName });
+  const resvg = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } });
+  const { pixels, width, height } = resvg.render();
+  // Title text sits between the day/SDG header row (baseline ~150) and the
+  // tagline row (baseline ~330); scan that band for ink past a safety margin
+  // near the right edge, using the actual rendered glyphs rather than a
+  // guessed character-width ratio.
+  const marginX = 1150;
+  const bandTop = 155;
+  const bandBottom = 320;
+  let overflow = false;
+  for (let y = bandTop; y < Math.min(bandBottom, height) && !overflow; y++) {
+    for (let x = marginX; x < width; x++) {
+      const idx = (y * width + x) * 4;
+      if (pixels[idx + 3] > 0 && !(pixels[idx] === 255 && pixels[idx + 1] === 255 && pixels[idx + 2] === 255)) {
+        overflow = true;
+        break;
+      }
+    }
+  }
+  assert.equal(overflow, false, `title text rendered past x=${marginX} in its vertical band`);
+});
+
+test('a short title (at or under the wrap threshold) still renders at full size on one line', () => {
+  const svg = tileSvg({ ...day, name: 'walkshed', tagline: null, status: 'shipped' });
+  assert.equal((svg.match(/<tspan/g) || []).length, 0, 'short titles render as a single <text>, no tspans needed');
+  assert.match(svg, /font-size="88"[^>]*>walkshed</);
 });
