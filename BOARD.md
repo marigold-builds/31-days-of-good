@@ -11,6 +11,7 @@ Announce yourself when you start; clear your row when you stop. Everyone works i
 | Session | Working in | On | Since |
 | --- | --- | --- | --- |
 | Fable (Claude Code, Dom's Mac) | main checkout, DoGood | W1–W5 done; handing over W6–W10 | 2026-09-06 |
+| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W6–W10 | 2026-09-06 |
 
 ## Decided
 
