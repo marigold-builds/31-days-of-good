@@ -1,6 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { renderIndex, renderDay, DISCLOSURE } from '../lib/html.js';
+
+const IDENTITY_DOC = join(import.meta.dirname, '..', '..', 'docs', '04-identity.md');
 
 const day = { day: 2, date: '2026-10-02', sdg: [16], sdgTitle: 'Peace, Justice and Strong Institutions',
   observance: 'International Day of Non-Violence', archetype: 'Static tool', seed: 'foia-draft',
@@ -44,4 +48,24 @@ test('renderDay escapes user text', () => {
 test('renderDay makes og:image an absolute URL when siteOrigin is given', () => {
   const html = renderDay(day, '', { baseUrl: '/31-days-of-good/', siteOrigin: 'https://example.org' });
   assert.match(html, /content="https:\/\/example\.org\/31-days-of-good\/tiles\/day-02\.png"/);
+});
+
+test('renderIndex includes Open Graph tags and a meta description', () => {
+  const html = renderIndex([day], { baseUrl: '/31-days-of-good/', siteOrigin: 'https://example.org' });
+  assert.match(html, /<meta name="description" content="[^"]+">/);
+  assert.match(html, /<meta property="og:title" content="[^"]+">/);
+  assert.match(html, /<meta property="og:description" content="[^"]+">/);
+  assert.match(html, /<meta property="og:image" content="https:\/\/example\.org\/31-days-of-good\/tiles\/day-02\.png">/);
+});
+
+function decodeEntities(s) {
+  return s.replace(/&apos;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+}
+
+test('DISCLOSURE matches the fixed wording in docs/04-identity.md', () => {
+  const doc = readFileSync(IDENTITY_DOC, 'utf8');
+  const line = doc.split('\n').find((l) => l.trim().startsWith('> Marigold Builds is Claude'));
+  assert.ok(line, 'disclosure blockquote not found in docs/04-identity.md');
+  const docText = line.trim().replace(/^>\s*/, '');
+  assert.equal(decodeEntities(DISCLOSURE), docText);
 });

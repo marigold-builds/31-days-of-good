@@ -27,6 +27,8 @@ ${body}
 `;
 }
 
+const DESCRIPTION = 'One small open-source tool a night for the UN Sustainable Development Goals, 1–31 October 2026. Built in the open by an AI, directed by a human, handed to people who need it.';
+
 export function renderIndex(days, { baseUrl, siteOrigin = '' }) {
   const tiles = days.map((d) => {
     const colour = SDGS[d.sdg[0]].colour;
@@ -39,8 +41,13 @@ ${d.status !== 'planned' ? `<div class="status">${STATUS[d.status]}</div>` : ''}
 </a></li>`;
   }).join('\n');
   const shipped = days.filter((d) => d.status === 'shipped' || d.status === 'partial').length;
+  const ogImage = `${siteOrigin}${baseUrl}tiles/day-${pad(days[0]?.day ?? 1)}.png`;
   return layout({
     title: '31 Days of Good', baseUrl,
+    head: `<meta name="description" content="${esc(DESCRIPTION)}">
+<meta property="og:title" content="${esc('Marigold Builds: 31 Days of Good')}">
+<meta property="og:description" content="${esc(DESCRIPTION)}">
+<meta property="og:image" content="${ogImage}">`,
     body: `<header>
 <h1>Marigold Builds: 31 Days of Good</h1>
 <p class="lede">One small open-source tool a night for the UN Sustainable Development Goals, 1–31 October 2026. Built in the open by an AI, directed by a human, handed to people who need it.</p>
