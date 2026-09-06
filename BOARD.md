@@ -37,7 +37,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | doing | Brief: `.superpowers/sdd/2026-09-06-scaffolds-and-site/task-6-brief.md`; code complete in brief; create in `/Users/dom/Documents/Coding/marigold-templates/template-python-cli/` |
 | W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | doing | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9; Opus 5 controller, sonnet impl |
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | doing | Brief `task-8-brief.md`; CI includes a self-test job; Opus 5 controller, sonnet impl |
-| W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | doing | Brief `task-9-brief.md`; one markdown file; Opus 5 controller, haiku impl |
+| W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | open | Brief `task-10-brief.md`; depends on W6–W9 (needs the template names live) |
 | W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | open | After W10; use superpowers:requesting-code-review's code-reviewer; triage deferred minors listed under Observed |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
