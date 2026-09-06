@@ -18,6 +18,7 @@ Decisions Dom made on 6 September 2026, in conversation, plus defaults applied w
 | 12 | Hosting | GitHub Pages only | Static tools and PWAs; no server-side demos |
 | 13 | Steward policy | *Default applied:* unstewarded repos get an honest archive banner on 31 Dec 2026 | Stated in every README |
 | 14 | Hacktoberfest contact | *Default applied:* one email to MLH/DEV in week 3 asking about a Fest listing | Draft goes in the queue |
+| 16 | X | Dom's personal account amplifies 5–7 times in the month; no programme account; nothing that reads as crypto fundraising in October | Row added to the playbook channel table |
 | 15 | Reserved days | *Default applied:* none | Calendar reorderable until 13 Sep |
 
 ## Still open
