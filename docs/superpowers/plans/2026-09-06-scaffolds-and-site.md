@@ -20,6 +20,7 @@
 - Tiles use SDG number, title and colour only. Do not reproduce the SDG icon graphics.
 - No emoji in READMEs. No "AI-powered" wording. No build-speed claims.
 - Commits end with `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
+  - **Superseded:** BOARD Decided 11 — commit trailers name the model that actually authored the commit, not this hard-coded value.
 - Zero spend. No external services beyond GitHub.
 
 ---
@@ -669,6 +670,8 @@ test('build writes index, 31 day pages, 31 tiles and css', async () => {
 
 - [ ] **Step 6: Write `site-build/build.js`** (tiny markdown: headings, paragraphs, emphasis, links, lists, code fences; enough for briefs and retros)
 
+  **Superseded:** final review Important 1 — this renderer could not render the programme's own `templates/daily-brief.md` and `templates/retro.md` (no pipe tables, ordered lists or hard line breaks). Fixed in `site-build/build.js`'s `markdown()`; "enough for briefs and retros" was a plan defect, not just an implementer gap.
+
 ```js
 import { mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -1208,6 +1211,8 @@ cd <name> && python3 -m http.server 8000   # then open http://localhost:8000
 ```
 plus a line "Or use the hosted copy: https://marigold-builds.github.io/<name>/".
 
+**Superseded:** final review Important 5 (BOARD Decided 14 overturning O11) — the `sw.js` and `app.js` above are cache-first with no `.catch`, so a returning visitor never sees a fix and an offline cache miss surfaces an unhandled rejection; `manifest.webmanifest` also ships no icons. Every clone of `template-web-static` inherited this. The parallel template-repo fix wave addresses it there (network-first navigation with a cached-index fallback, `.catch` on both, a version-derived cache name, at least one icon); this plan's code sample is left as written for the historical record.
+
 - [ ] **Step 7: Workflows**
 
 `.github/workflows/ci.yml`:
@@ -1355,6 +1360,8 @@ branding:
   icon: "sun"
   color: "orange"
 ```
+
+**Superseded:** final review Important 6 — `node20` was already deprecated when this plan was written (GitHub forces `node20` actions onto the Node 24 runner with a warning today, and will fail them once forcing stops). The parallel template-repo fix wave changes this to `using: "node24"`, with `actions/checkout` and `actions/setup-node` bumped to v5; this plan's code sample is left as written for the historical record.
 
 - [ ] **Step 5: Run tests**: `npm test` → 2 passing. Then a smoke run: `INPUT_WHO=ci node src/main.js` prints `greeting=hello, ci`.
 
