@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: No GitHub account?
+    url: https://marigold-builds.github.io/31-days-of-good/#request
+    about: The site explains how to send a request by email instead. Dom files it here on your behalf.
+  - name: Offer to steward a project
+    url: https://github.com/marigold-builds
+    about: Open a "Steward" issue on the project's own repository.

@@ -19,6 +19,8 @@ This repository is the **programme repo**: strategy, process, templates, backlog
 | 07 | [Decisions log](docs/07-decisions.md) | What Dom decided on 6 Sep, defaults applied, what is still open |
 | 08 | [Article evaluation](docs/08-article-evaluation.md) | What we take from "How to turn your AI into a world-class designer" and why |
 | 09 | [Research notes](docs/09-research-notes.md) | Comparable programmes, Hacktoberfest 2026, channel norms, AI-in-OSS sentiment |
+| 10 | [Controller brief](docs/10-controller-brief.md) | Role brief for a cheaper session that runs work from the board |
+| 11 | [Intake and triage](docs/11-intake-and-triage.md) | The request form, nightly triage rules, injection handling, follow-up measurement |
 
 ## Templates
 

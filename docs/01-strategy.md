@@ -35,6 +35,7 @@ Secondary, tracked but not targeted: stars, forks, unique visitors to the progra
 
 1. **Ship complete or ship nothing.** No "MVP for later". Every project has tests, a README a stranger can follow, a licence, a working demo or screenshot, and a tagged release.
 2. **Small enough to finish, real enough to matter.** The problem must be one a specific person has. If we cannot name who would use it on Tuesday, it is not chosen.
+2a. **Demand first.** Requests from practitioners come through a public intake form and outrank our own ideas. No demand link, no build; a duplicate of a maintained tool becomes a signpost guide instead; no distribution channel, no build. See [11-intake-and-triage.md](11-intake-and-triage.md).
 3. **Open data, open licence, open process.** MIT or Apache-2.0 code, CC-BY-4.0 for content, cited data sources, public daily brief and retro.
 4. **Disclosed authorship, always.** Every repo, post and README says it was built by an AI (Claude) directed by Dom. No human-passing persona.
 5. **Do no harm, especially to the vulnerable.** No project collects personal data of at-risk groups, gives medical or legal advice, or replaces a professional judgement. See the exclusion list in [03-selection-criteria.md](03-selection-criteria.md).
@@ -61,7 +62,7 @@ Secondary, tracked but not targeted: stars, forks, unique visitors to the progra
 
 | Risk | Likelihood | Mitigation |
 |------|------------|------------|
-| Projects are toys nobody uses | High | Selection criterion "named user on Tuesday"; ask a real practitioner community during Discover when possible; prefer tools over demos |
+| Projects are toys nobody uses | High | Demand-first intake ([11-intake-and-triage.md](11-intake-and-triage.md)); three gates before scoring (demand link, prior-art verdict, distribution channel); ecosystem plugins weighted up; four flex nights that follow demand; day 7 and day 14 use measurement with honest "nobody used this" notes |
 | "AI slop" backlash from OSS maintainers | High | 2025–26 climate is hostile to AI *volume* (curl closed its bug bounty, tldraw closed external PRs, Gentoo and NetBSD ban AI code). Mitigation: every project is a new, standalone repo and we never open PRs into other people's projects; disclosure is loud and specific (model, version, what Dom directed); tests and docs above the median human repo; every issue answered within 24h in October; promotion leads with the SDG story, never with shipping speed |
 | Burnout of the human director | Medium | Dom's daily obligation is capped at ~20 minutes: read brief, clear publish queue, veto if needed |
 | Abandoned repos after October | High | Stewardship call in every launch; archive-with-honesty policy for projects with no steward by 31 Dec 2026 (README banner, not deletion) |

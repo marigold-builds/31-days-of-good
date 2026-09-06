@@ -62,6 +62,18 @@ Full variants per channel live in [../templates/launch-post.md](../templates/lau
 | **Close** | 25 – 31 Oct | World Cities Day (31 Oct) closes the calendar. Day 31 ships the "run your own day of good" kit. Show HN the retrospective in the first week of November, when the numbers are real. |
 | **Afterlife** | Nov – Dec | Stewardship hand-offs. Archive-with-honesty banner on anything unstewarded by 31 Dec. One "what we learned" long-form. |
 
+## The request form is marketing
+
+Every "tell us what you need" post is both intake and promotion, and it puts practitioners at the centre of the story before a line of code exists. The September ask ("what small tool would help your work?") goes to practitioner networks, the Digital Public Goods community, civic-tech brigades and teacher and WASH forums, from Dom's accounts, with the form link. Every daily launch post that was built for a request says so and credits the requester (with their consent). See [11-intake-and-triage.md](11-intake-and-triage.md).
+
+## Community track: your day of good
+
+Anyone can build one good thing a day with their own credits and post it under `#31DaysOfGood`. There is no submission, no moderation and no gallery to maintain; the hashtag is the gallery. What we publish is the bar, so the tag stays worth something:
+
+> **A good thing** has a named user, an SDG target by number, an open licence, tests, one stated limitation, and a disclosure if AI helped build it. Requests other people can build are in the [intake inbox](https://github.com/marigold-builds/31-days-of-good/issues?q=label%3Arequest%2Freal).
+
+The inbox is the point of contact between the two tracks: more real needs than one builder can serve, open to anyone. Seed the community track in the week 3 digest, launch the "run your own day of good" kit on Day 31, and register "A Day of Good" as an online Fest with the Hacktoberfest 2026 organisers so it has a date and an audience without Dom running an event.
+
 ## Partnerships worth one email each
 
 - **Digital Public Goods Alliance.** Certification is too slow for a day-old repo, but their nine indicators are a credible quality bar to design against, and their community is the right audience. One introduction email in September.

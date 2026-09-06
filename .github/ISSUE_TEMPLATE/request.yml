@@ -1,0 +1,68 @@
+name: Request a tool
+description: Tell us about a small, real problem in your work that a one-night open-source tool could help with.
+title: "Request: <one line>"
+labels: ["request", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Every night in October 2026 we build one small open-source tool for the Sustainable Development Goals, and requests from people doing the work come first.
+        Please do not include personal data about the people you serve. Describe the workflow, not the individuals.
+  - type: input
+    id: org
+    attributes:
+      label: Organisation or role
+      description: Who you are, in one line (e.g. "WASH officer at a district NGO in Malawi", "primary teacher, UK").
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: The task you do today, step by step
+      description: What you actually do now, with what tools (spreadsheets, paper, a specific app). The more concrete, the better.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What goes wrong or takes too long
+    validations:
+      required: true
+  - type: input
+    id: users
+    attributes:
+      label: Who else has this problem?
+      description: Roughly how many people, and where they gather (a forum, a WhatsApp group, a network).
+  - type: dropdown
+    id: sdg
+    attributes:
+      label: Closest Sustainable Development Goal
+      options: ["1 No Poverty", "2 Zero Hunger", "3 Good Health and Well-being", "4 Quality Education", "5 Gender Equality", "6 Clean Water and Sanitation", "7 Affordable and Clean Energy", "8 Decent Work and Economic Growth", "9 Industry, Innovation and Infrastructure", "10 Reduced Inequalities", "11 Sustainable Cities and Communities", "12 Responsible Consumption and Production", "13 Climate Action", "14 Life Below Water", "15 Life on Land", "16 Peace, Justice and Strong Institutions", "17 Partnerships for the Goals", "Not sure"]
+    validations:
+      required: true
+  - type: input
+    id: existing
+    attributes:
+      label: Tools you have already tried
+      description: Names or links. "None" is a fine answer.
+  - type: input
+    id: link
+    attributes:
+      label: A link that shows this is real
+      description: Your organisation's website, a forum thread, a manual, a public post. Optional but it moves your request up the list.
+  - type: input
+    id: contact
+    attributes:
+      label: How can we reach you if we build it?
+      description: An email or a public handle. Only used to tell you the tool exists and ask if it works.
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Please confirm
+      options:
+        - label: This request contains no personal data about beneficiaries, patients, students or other individuals.
+          required: true
+        - label: I understand the tool would be open source (MIT), built in one night by an AI directed by a human, and may not be built at all.
+          required: true

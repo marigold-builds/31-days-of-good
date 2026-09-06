@@ -19,6 +19,8 @@ Decisions Dom made on 6 September 2026, in conversation, plus defaults applied w
 | 13 | Steward policy | *Default applied:* unstewarded repos get an honest archive banner on 31 Dec 2026 | Stated in every README |
 | 14 | Hacktoberfest contact | *Default applied:* one email to MLH/DEV in week 3 asking about a Fest listing | Draft goes in the queue |
 | 16 | X | Dom's personal account amplifies 5–7 times in the month; no programme account; nothing that reads as crypto fundraising in October | Row added to the playbook channel table |
+| 17 | Demand first | Public intake form (GitHub issue form) on the programme repo; three gates before scoring; four flex nights (12, 19, 26, 30 Oct); day 7 and 14 use measured and reported | [11-intake-and-triage.md](11-intake-and-triage.md); calendar and selection criteria updated |
+| 18 | Community track | A hashtag movement (`#31DaysOfGood`), not a programme: no submissions or moderation; we publish the bar and share the inbox; register as a Hacktoberfest Fest | Playbook "Community track" section |
 | 15 | Reserved days | *Default applied:* none | Calendar reorderable until 13 Sep |
 
 ## Still open

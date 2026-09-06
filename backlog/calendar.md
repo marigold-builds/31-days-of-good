@@ -17,25 +17,25 @@ Legend: **Obs.** = observance hook · **Arch.** = suggested archetype (see [../d
 | 9 | Fri 9 Oct | 9 Infrastructure | World Post Day | CLI | `slowlint`: page-weight and 2G-readiness linter for web pages |
 | 10 | Sat 10 Oct | 3 Health | World Mental Health Day; Migratory Bird Day | PWA, offline | `steady`: offline grounding and crisis-resource cards, localisable, no tracking |
 | 11 | Sun 11 Oct | 5 Gender Equality | Int'l Day of the Girl Child | CLI + Action | `jobad-lint`: gendered and exclusionary language linter for job ads |
-| 12 | Mon 12 Oct | 14 Life Below Water | — | Static tool | `beach-tally`: offline beach-cleanup logger exporting to open litter schemas |
+| 12 | Mon 12 Oct | 14 Life Below Water | **Flex night** | Static tool | fallback `beach-tally`: offline beach-cleanup logger exporting to open litter schemas |
 | 13 | Tue 13 Oct | 13 Climate Action | Int'l Day for Disaster Risk Reduction | CLI/library | `flood-check`: Open-Meteo flood and severe-weather lookup with plain alerts |
 | 14 | Wed 14 Oct | 8 Decent Work | — | Library | `fair-rota`: shift scheduling library with rest-rule enforcement |
 | 15 | Thu 15 Oct | 6 Clean Water | Global Handwashing Day; Int'l Day of Rural Women | PWA | `wash-timer`: handwashing and water-treatment timers for clinics and schools, offline |
 | 16 | Fri 16 Oct | 2 Zero Hunger | World Food Day | Library | `faostat-py`: thin, tested FAOSTAT client with cached fixtures |
 | 17 | Sat 17 Oct | 1 No Poverty | Int'l Day for the Eradication of Poverty | CLI/library | `pip-lines`: World Bank poverty-line lookups and PPP conversions |
 | 18 | Sun 18 Oct | 12 Responsible Consumption | Maintenance sprint (half day) | Dataset | `off-facts`: Open Food Facts packaging and label dataset extract with schema |
-| 19 | Mon 19 Oct | 9 Infrastructure | — | GitHub Action | `oss-pulse`: bus-factor and maintenance-health report for a repo |
+| 19 | Mon 19 Oct | 9 Infrastructure | **Flex night** | GitHub Action | fallback `oss-pulse`: bus-factor and maintenance-health report for a repo |
 | 20 | Tue 20 Oct | 6 Clean Water | — | Library | `water-footprint`: product and diet water-footprint calculator with cited factors |
 | 21 | Wed 21 Oct | 14 Life Below Water | — | Static tool | `catch-check`: sustainable seafood lookup against open advisories |
 | 22 | Thu 22 Oct | 1 No Poverty | — | Template | `benefit-finder-kit`: self-hostable eligibility-screener template with a rules DSL |
 | 23 | Fri 23 Oct | 15 Life on Land | Int'l Day of the Snow Leopard | CLI | `firms-watch`: NASA FIRMS fire alerts for a bounding box, to RSS or webhook |
 | 24 | Sat 24 Oct | 17 Partnerships | United Nations Day; World Development Information Day | Library | `sdg-data`: typed client for the UN SDG Global Database API |
 | 25 | Sun 25 Oct | 16 Peace & Justice | Global Media and Information Literacy Week | Static tool | `source-check`: media-literacy checklist and citation-trace helper |
-| 26 | Mon 26 Oct | 4 Education | MIL Week | Static tool | `readable`: reading-level and plain-language scorer for teachers, offline |
+| 26 | Mon 26 Oct | 4 Education | **Flex night**; MIL Week | Static tool | fallback `readable`: reading-level and plain-language scorer for teachers, offline |
 | 27 | Tue 27 Oct | 11 Cities | World Day for Audiovisual Heritage | Template | `civic-report-kit`: self-hostable issue-reporting template for small councils |
 | 28 | Wed 28 Oct | 7 Affordable & Clean Energy | — | CLI | `grid-now`: carbon-intensity lookup for open grid APIs with "run it later" advice |
 | 29 | Thu 29 Oct | 5 Gender Equality | Int'l Day of Care and Support | Library | `care-hours`: unpaid-care time accounting from ILOSTAT with a survey template |
-| 30 | Fri 30 Oct | 13 Climate Action | — | Library | `stripes`: warming-stripes generator for any place, SVG, from open data |
+| 30 | Fri 30 Oct | 13 Climate Action | **Flex night** | Library | fallback `stripes`: warming-stripes generator for any place, SVG, from open data |
 | 31 | Sat 31 Oct | 11 Cities + 17 | World Cities Day; close | Template | `day-of-good-kit`: everything needed to run your own one-day SDG build |
 
 ## Coverage
@@ -61,6 +61,10 @@ Legend: **Obs.** = observance hook · **Arch.** = suggested archetype (see [../d
 | 17 | 1, 24, 31 |
 
 SDGs 2, 7, 8 and 10 appear once. If Dom wants any of them twice, the second SDG 11 or SDG 17 slot is the one to trade.
+
+## Flex nights
+
+Nights 12, 19, 26 and 30 bend toward demand: the highest-scored open request in the intake inbox, or a follow-up release on an earlier tool that people are using, whichever has the stronger signal. If neither exists, the fallback seed is built. Each flex night still carries its SDG so coverage holds; a request from a different SDG may take the slot, and the log records why.
 
 ## Notes
 

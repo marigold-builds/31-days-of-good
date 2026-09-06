@@ -13,11 +13,17 @@ How a raw idea becomes the day's project. Used in the Define phase; takes about 
 - Is a chatbot, a "wrapper around an LLM", or a generic dashboard. These are the AI defaults and the audience is tired of them.
 - Cannot be honestly built, tested and documented within the Develop budget even at the bottom of the scope-cut ladder.
 
+## Step 0b · Three gates before scoring (any fail kills the idea)
+
+1. **Demand link.** The brief must link the evidence that the workflow exists: a request in the intake inbox ([11-intake-and-triage.md](11-intake-and-triage.md)), a forum thread, a field manual, a help-wanted issue, or a named person. A judgement that "someone probably needs this" is not evidence.
+2. **Prior-art verdict.** List the five closest existing tools (GitHub topic search, npm and PyPI, the Digital Public Goods registry, awesome-lists, a web search) and one line each on why they do not solve it. If a maintained tool already does, the night's honest output is a **signpost**: a short guide to that tool, logged as `shipped: guide`. A duplicate is never built.
+3. **Distribution before code.** Name where the user finds this on Wednesday: a specific forum, registry, mailing list, plugin directory, or person. No channel, no build.
+
 ## Step 1 · Scoring (0–3 each, 18 max)
 
 | Criterion | 0 | 1 | 2 | 3 |
 |-----------|---|---|---|---|
-| **Named user** — who uses it on Tuesday? | Nobody specific | A vague role | A specific role with a known workflow | A specific person or org we could contact today |
+| **Named user** — who uses it on Tuesday? | Nobody specific | A vague role | A specific role with a known workflow, linked | A specific person or org who asked for it, with contact |
 | **Impact link** — how direct is the SDG target? | Decorative | Thematic | Serves a named target | Serves a named indicator and could move it |
 | **Gap** — does this exist already? | Yes, maintained | Yes, but abandoned or bad | Partial or scattered | Nothing found after real search |
 | **Buildability** — can it be complete in 4h15? | No | With luck | Yes with scope-cut ladder | Comfortably, with polish time |
@@ -36,7 +42,8 @@ Across the month, aim for variety so the calendar does not become 31 dashboards.
 
 | Archetype | Target count | Why |
 |-----------|--------------|-----|
-| CLI or library/SDK for an open dataset or API | 8–10 | Highest reuse; developers fork these |
+| Plugin, adapter or Action for an ecosystem people already use (KoboToolbox, ODK, DHIS2, OpenStreetMap, CKAN/HDX, Ushahidi, GitHub) | 6–8 | Existing users and distribution; adoption means "install", not "discover" |
+| CLI or library/SDK for an open dataset or API | 6–8 | Highest reuse; developers fork these |
 | Offline-first static web tool or PWA | 7–9 | Usable in low-connectivity contexts, no hosting burden |
 | GitHub Action, linter, or dev-workflow tool | 3–4 | Reaches the developer audience directly; Hacktoberfest fit |
 | Curated dataset or open data cleanup with a schema | 3–4 | Durable value, low code risk |
@@ -51,3 +58,4 @@ Across the month, aim for variety so the calendar does not become 31 dashboards.
 3. What breaks if the data source disappears? (Answer must be "the bundled fixture keeps the tests green".)
 4. What is the smallest thing that would still be worth shipping? (This becomes rung 3 of the scope-cut ladder.)
 5. Is there a community we could tell about this *before* building it, to get a reaction in the same day?
+6. What would "used" look like at day seven and day fourteen, and how would we see it? (Repo traffic, an issue from the requester, an install.) If there is no way to see it, the distribution gate was not really passed.

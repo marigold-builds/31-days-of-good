@@ -7,6 +7,21 @@
 
 ## Who uses it on Tuesday
 <A specific role or org and the workflow this slots into. Name the community we can tell today.>
+**Demand link:** <URL of the request issue, forum thread, manual, or person; required>
+
+## Prior art
+| Existing tool | Why not |
+|---------------|---------|
+| | |
+| | |
+| | |
+<Five rows, or "signpost night: <tool> already does this" and the brief becomes a guide.>
+
+## Where the user finds it on Wednesday
+<A specific forum, registry, mailing list, plugin directory or person. Required.>
+
+## What "used" will look like
+<Day 7 and day 14 signals we would expect to see, and where.>
 
 ## What it does
 - <capability 1>
