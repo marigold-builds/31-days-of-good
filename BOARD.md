@@ -11,7 +11,6 @@ Announce yourself when you start; clear your row when you stop. Everyone works i
 | Session | Working in | On | Since |
 | --- | --- | --- | --- |
 | Fable (Claude Code, Dom's Mac) | main checkout, DoGood | Demand-first docs (commit touches only `docs/01,02,03,05,07,11`, `backlog/calendar.md`, `templates/daily-brief.md`, `.github/ISSUE_TEMPLATE/`, `README.md`, `BOARD.md`); then idle | 2026-09-06 |
-| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W11 final review | 2026-09-06 |
 
 ## Decided
 
@@ -45,8 +44,8 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | closed 5cc2f2f | `marigold-builds/template-node-action` live, `is_template`, both CI jobs green; sha is in that repo |
 | W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | closed 6d5c1e4 | `marigold-builds/.github` live; sha is in that repo, not this one; review clean |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | closed 05c0051 | docs, README and daily process now describe the live site and templates; CI and Pages green |
-| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | doing | Fable subagent review done: no Critical, 7 Important, findings in `.superpowers/sdd/2026-09-06-scaffolds-and-site/final-review-findings.md`. Closes when W19 and W20 land and the scoped re-reviews pass |
-| W19 | Final-review fix wave A: programme repo (markdown renderer, log validation, tile overflow, index OG tags, O2/O3/O4, doc and plan corrections) | impl | 1 | doing | From W11's findings file; Opus 5 controller, sonnet impl |
+| W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | closed 9b6bae8 | Fable subagent review: no Critical, 7 Important, all fixed via W19/W20 and verified by scoped re-reviews. Deferred minors triaged; residuals are O13–O16 |
+| W19 | Final-review fix wave A: programme repo | impl | 1 | closed 9b6bae8 | 2 rounds; all findings addressed, re-reviews clean; 43/43 tests; CI and Pages green |
 | W20 | Final-review fix wave B: three template repos | impl | 1 | closed 34d36f9 | all findings addressed across 4 repos + a residual round; re-reviews clean; CI and Pages green; shas are in those repos |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
 | W13 | Verify every API in `backlog/open-data-register.md` and save a fixture per SDG | impl (haiku) | 2 | open | Mechanical; one script, one fixture dir; note rate limits found |
@@ -82,3 +81,5 @@ Findings carry `path:line @ sha`. A finding without a sha is unverified.
 | O12 | Deferred minor: `docs/06-preparation-plan.md` writes the templates as `marigold-builds/template-*` where `README.md` uses the bare names | `docs/06-preparation-plan.md:15` @ 05c0051 | cosmetic inconsistency inside one commit |
 | O13 | Two disclosure wordings are in circulation: the verbatim paragraph (site `lib/html.js:4`, org profile) and a per-project variant in `templates/project-README.md:50` naming the model id and linking the day's log, which every template README inherits | `templates/project-README.md:50` @ 9c7d95b | **For Dom.** The variant is arguably better — more specific, does not overclaim, and the Fable review swept the disclosure and found nothing overclaiming. Not changed unilaterally because the disclosure is a public commitment |
 | O14 | Deferred minor: `test/pwa.test.js`'s `response.ok` assertion is weaker than its fix report claimed — the regex proves the guard exists before `cache.put`, but would still pass if `cache.put` were moved outside the `if` block | `template-web-static/test/pwa.test.js:71` @ 34d36f9 | code is correct and the guard does protect the `cache.put`; the claim was overstated, not the fix. Tighten the assertion or note the static-pattern limit in a comment |
+| O15 | Deferred minor: `loadDays`' tile-name wrap check is gated on `if (meta.name)`, so an empty-string `name` skips validation | `site-build/lib/days.js:72` @ 9b6bae8 | harmless today (`layoutTitle('')` yields one empty line, not a truncation); latent gap in the path W19 hardened |
+| O16 | Deferred minor: `wrap()`'s hard-split on adjacent over-width words can rejoin a trailing fragment with the next word across a space, visually merging two words on one line | `site-build/lib/wrap.js` @ 9b6bae8 | pre-existing logic moved verbatim during W19; not introduced by it |
