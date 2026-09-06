@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tileSvg, tilePng, escapeXml } from '../lib/tile.js';
+import { tileSvg, tilePng, escapeXml, wrap } from '../lib/tile.js';
 
 const day = { day: 6, date: '2026-10-06', sdg: [11], sdgTitle: 'Sustainable Cities and Communities',
   observance: 'World Habitat Day', archetype: 'Static map tool', seed: 'walkshed',
@@ -36,4 +36,10 @@ test('tileSvg wraps a long tagline onto more than one line', () => {
 test('tilePng returns a PNG', async () => {
   const png = await tilePng(day);
   assert.equal(png.subarray(0, 4).toString('hex'), '89504e47');
+});
+
+test('wrap hard-splits a single word longer than maxChars', () => {
+  const lines = wrap('x'.repeat(100), 48);
+  assert.ok(lines.length >= 2);
+  assert.ok(lines.every((l) => l.length <= 48));
 });

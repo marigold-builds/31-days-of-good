@@ -10,7 +10,8 @@ export function escapeXml(s) {
 }
 
 export function wrap(text, maxChars) {
-  const words = String(text).split(/\s+/).filter(Boolean);
+  const words = String(text).split(/\s+/).filter(Boolean)
+    .flatMap(w => w.length > maxChars ? w.match(new RegExp(`.{1,${maxChars}}`, 'g')) : [w]);
   const lines = [];
   let line = '';
   for (const w of words) {
