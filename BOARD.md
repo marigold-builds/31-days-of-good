@@ -27,15 +27,17 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 8. **Index cards show no status label while `planned`.** Why: critic scored the 31 repeated "Planned" labels as noise; the header already says how many shipped.
 9. **Day pages keep their own `<h1>` even though the share card repeats it.** Why: a page needs a real heading for accessibility and search; the card is an image.
 10. **Controller work is delegated to a cheaper session; Fable is opened only for judgement.** Why: dispatch, packaging and ledgering are mechanical; plan-writing, rulings that override a plan, the final whole-branch review, and the nightly Discover/Define need judgement. See `docs/10-controller-brief.md`.
+11. **Commit trailers name the model that actually authored the commit** (`Claude Haiku 4.5`, `Claude Sonnet 5`, `Claude Opus 5`), not the plan's hard-coded `Claude Fable 5.1`. Why: supersedes that Global Constraint, which was written when Fable was the only session (see Decided 10); a programme whose premise is honest disclosure must not misattribute its own commits. Cost if wrong: cosmetic attribution in template-repo history.
+12. **Template repos' `npm test` is `node --test test/*.js`, not `node --test test/`.** Why: Decided 4 — the bare-directory form was unreliable on Node 22.23.1, and plan Tasks 7 and 8 both carry the directory form. Cost if wrong: none; the glob form is strictly more explicit and the runners are Node 22 too.
 
 ## Open
 
 | id | item | owner | pri | state | note |
 | --- | --- | --- | --- | --- | --- |
-| W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | open | Brief: `.superpowers/sdd/2026-09-06-scaffolds-and-site/task-6-brief.md`; code complete in brief; create in `/Users/dom/Documents/Coding/marigold-templates/template-python-cli/` |
-| W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | open | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9 |
-| W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | open | Brief `task-8-brief.md`; CI includes a self-test job |
-| W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | open | Brief `task-9-brief.md`; one markdown file |
+| W6 | Template repo `template-python-cli` (plan Task 6) | impl | 1 | doing | Brief: `.superpowers/sdd/2026-09-06-scaffolds-and-site/task-6-brief.md`; code complete in brief; create in `/Users/dom/Documents/Coding/marigold-templates/template-python-cli/` |
+| W7 | Template repo `template-web-static` (plan Task 7) | impl | 1 | doing | Brief `task-7-brief.md`; needs Pages enabled via `gh api`; may run parallel with W6/W8/W9; Opus 5 controller, sonnet impl |
+| W8 | Template repo `template-node-action` (plan Task 8) | impl | 1 | doing | Brief `task-8-brief.md`; CI includes a self-test job; Opus 5 controller, sonnet impl |
+| W9 | Org profile repo `.github` (plan Task 9) | impl | 2 | doing | Brief `task-9-brief.md`; one markdown file; Opus 5 controller, haiku impl |
 | W10 | Close the loop in programme docs (plan Task 10) | impl | 2 | open | Brief `task-10-brief.md`; depends on W6–W9 (needs the template names live) |
 | W11 | Final whole-branch review of the scaffolds plan | Fable | 1 | open | After W10; use superpowers:requesting-code-review's code-reviewer; triage deferred minors listed under Observed |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Blocked on Dom creating the accounts and storing secrets (`docs/07-decisions.md` still-open list); design first as a plan |
