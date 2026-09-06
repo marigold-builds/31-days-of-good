@@ -35,5 +35,10 @@ test('markdown renders the real retro template with a table and keeps status/rep
   const html = markdown(readFileSync(join(TEMPLATES, 'retro.md'), 'utf8'));
   assert.match(html, /<table>[\s\S]*<th>Phase<\/th>[\s\S]*<\/table>/);
   assert.match(html, /<strong>Status:<\/strong>[^<]*<br>\s*<strong>Repo:<\/strong>/);
-  assert.doesNotMatch(html, /missed <link>/);
+  // The template's literal "<link>" placeholder must come through
+  // entity-escaped, not as a real (void) <link> element - otherwise it
+  // would render invisibly instead of as the placeholder text a builder
+  // is meant to replace.
+  assert.match(html, /&lt;link&gt;/);
+  assert.doesNotMatch(html, /<link>/);
 });
