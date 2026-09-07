@@ -11,7 +11,7 @@ Announce yourself when you start; clear your row when you stop. Everyone works i
 | Session | Working in | On | Since |
 | --- | --- | --- | --- |
 | Fable (Claude Code, Dom's Mac) | main checkout, DoGood | Demand-first docs (commit touches only `docs/01,02,03,05,07,11`, `backlog/calendar.md`, `templates/daily-brief.md`, `.github/ISSUE_TEMPLATE/`, `README.md`, `BOARD.md`); then idle | 2026-09-06 |
-| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W21 | 2026-09-07 |
+| Opus 5 (controller, Claude Code desktop) | main checkout, DoGood | W21, W22 | 2026-09-07 |
 
 ## Decided
 
@@ -50,6 +50,7 @@ Append-only. Never edit an entry; supersede it with a new one. Programme-level d
 | W20 | Final-review fix wave B: three template repos | impl | 1 | closed 34d36f9 | all findings addressed across 4 repos + a residual round; re-reviews clean; CI and Pages green; shas are in those repos |
 | W12 | Publish pipeline: Action posts to Bluesky, Mastodon, dev.to on queue-PR merge | impl | 1 | blocked | Bluesky done 2026-09-07: `BLUESKY_APP_PASSWORD` (org secret) and `BLUESKY_HANDLE` (org variable), names confirmed by Dom — see `docs/07-decisions.md` row 20. Still blocked on the Mastodon and dev.to accounts. The design plan needs no secrets and can start now, but plan-writing is a Fable seat per `docs/10-controller-brief.md` |
 | W21 | Credentials check workflow: `workflow_dispatch` auth-only probe for the publish credentials | impl | 1 | doing | Proves `BLUESKY_APP_PASSWORD`/`BLUESKY_HANDLE` resolve and authenticate, without posting. Public repo means public logs — must never print the session JWTs. W12 extends it per channel |
+| W22 | Write the W12 publish-pipeline plan | Fable | 1 | doing | Dom authorised a Fable subagent for plan-writing 2026-09-07. Plan only, no implementation; W12 stays blocked for the channels whose accounts do not exist |
 | W13 | Verify every API in `backlog/open-data-register.md` and save a fixture per SDG | impl (haiku) | 2 | open | Mechanical; one script, one fixture dir; note rate limits found |
 | W14 | Blind README reviewer and screenshot reviewer prompts, tested on an existing repo | Fable | 2 | open | `docs/06-preparation-plan.md` week 2 |
 | W15 | Dry run 1, night of 22 Sep, public repo `dry-run-1` | Fable | 1 | open | Full overnight, real time boxes, per `docs/02-daily-process.md` |
