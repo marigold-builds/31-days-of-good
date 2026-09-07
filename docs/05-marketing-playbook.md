@@ -27,7 +27,7 @@ Grounded in channel research done September 2026 (summarised in [09-research-not
 | **X (Dom's personal account)** | 5–7 times in the month, **manual** | Launch, the four Sunday digests, one or two standout tools, the retrospective, quoted in Dom's own voice | Amplifier, not a channel: no Marigold Builds account on X. Dom's ~5k followers are Web3 and AI-curious; the public-goods framing fits, anything resembling crypto fundraising does not, at least until November |
 | **Reddit** | At most 2–3 times in the month, one sub per post | Only when a project fits a specific sub (r/selfhosted for a self-hostable tool, a domain sub for a domain tool) | No cross-posting the same text; disclose affiliation and AI authorship; 90/10 rule |
 | **Show HN** | Once, maybe twice | One flagship: the retrospective at month end, or the single strongest tool | Daily Show HN posts will be flagged as promotion; neutral title, no exclamation marks |
-| **Product Hunt** | Zero or once | Only for the "run your own day of good" kit on Day 31, if at all | Daily launches read as spam; the platform's value for discovery has declined |
+| **Product Hunt** | Zero or once | Only for a flagship, month-closing tool if one ships near the end (a "run your own day of good" kit is one idea, not assigned to a date), if at all | Daily launches read as spam; the platform's value for discovery has declined |
 | **Weekly digest** (email or site post) | Sundays | Five best moments, contributor shout-outs, next week's SDG calendar | The one thing people can subscribe to |
 | **Direct outreach** | Daily, 1–3 messages | The actual named user or community from the brief, told about the tool built for them | Personal, specific, from Dom; this is where adoption comes from |
 
@@ -55,11 +55,11 @@ Full variants per channel live in [../templates/launch-post.md](../templates/lau
 
 | Phase | Days | Marketing focus |
 |-------|------|-----------------|
-| **Launch** | 30 Sep – 2 Oct | Announce the programme, the calendar, the disclosure, and the Day 1 meta-tool. One LinkedIn post, one Bluesky/Mastodon thread, the site goes live at 08:00 on 1 Oct with Day 1 already shipped (built the night of 30 Sep). Email 5–10 people in the SDG/civic-tech space personally. |
+| **Launch** | 30 Sep – 2 Oct | Announce the programme, the calendar, the disclosure, and whatever Day 1 ships (built the night of 30 Sep, chosen that night like every other night — Decided 21). One LinkedIn post, one Bluesky/Mastodon thread, the site goes live at 08:00 on 1 Oct with Day 1 already shipped. Email 5–10 people in the SDG/civic-tech space personally. |
 | **Build trust** | 3 – 12 Oct | Daily rhythm. First weekly digest. First "here is what went wrong" retro post, deliberately early. Outreach to the named user for each tool. |
 | **Observance cluster** | 13 – 17 Oct | Disaster Risk Reduction, Rural Women, Handwashing, Food Day, Poverty Eradication fall in five days. Pre-announce the cluster; tag the relevant UN agency accounts respectfully once each, not daily.  |
-| **Momentum** | 18 – 24 Oct | Maintenance sprint on the 18th is itself a post: "we merged your PRs". Contributor and steward stories. UN Day (24 Oct) gets the partnership tool (SDG 17). Pitch one podcast or newsletter for a month-end feature. |
-| **Close** | 25 – 31 Oct | World Cities Day (31 Oct) closes the calendar. Day 31 ships the "run your own day of good" kit. Show HN the retrospective in the first week of November, when the numbers are real. |
+| **Momentum** | 18 – 24 Oct | Maintenance sprint on the 18th is itself a post: "we merged your PRs". Contributor and steward stories. UN Day (24 Oct) is a natural moment to call out if that night's own research happens to serve SDG 17 partnerships — not assigned in advance. Pitch one podcast or newsletter for a month-end feature. |
+| **Close** | 25 – 31 Oct | World Cities Day (31 Oct) closes the calendar. If Day 31 ships something like a "run your own day of good" kit, that is a strong closing story; either way the calendar's last night is chosen the same way as every other. Show HN the retrospective in the first week of November, when the numbers are real. |
 | **Afterlife** | Nov – Dec | Stewardship hand-offs. Archive-with-honesty banner on anything unstewarded by 31 Dec. One "what we learned" long-form. |
 
 ## The request form is marketing
@@ -72,7 +72,7 @@ Anyone can build one good thing a day with their own credits and post it under `
 
 > **A good thing** has a named user, an SDG target by number, an open licence, tests, one stated limitation, and a disclosure if AI helped build it. Requests other people can build are in the [intake inbox](https://github.com/marigold-builds/31-days-of-good/issues?q=label%3Arequest%2Freal).
 
-The inbox is the point of contact between the two tracks: more real needs than one builder can serve, open to anyone. Seed the community track in the week 3 digest, launch the "run your own day of good" kit on Day 31, and register "A Day of Good" as an online Fest with the Hacktoberfest 2026 organisers so it has a date and an audience without Dom running an event.
+The inbox is the point of contact between the two tracks: more real needs than one builder can serve, open to anyone. Seed the community track in the week 3 digest, launch a "run your own day of good" kit near the close of the month if that is what a night ships, and register "A Day of Good" as an online Fest with the Hacktoberfest 2026 organisers so it has a date and an audience without Dom running an event.
 
 ## Partnerships worth one email each
 

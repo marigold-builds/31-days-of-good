@@ -31,7 +31,7 @@ This repository is the **programme repo**: strategy, process, templates, backlog
 
 ## Backlog
 
-- [backlog/calendar.md](backlog/calendar.md), proposed SDG-per-day calendar aligned to UN observance days
+- [backlog/calendar.md](backlog/calendar.md), September 2026's SDG-and-observance research, kept as a non-binding reference — no night's SDG is fixed in advance (Decided 21)
 - [backlog/seed-ideas.md](backlog/seed-ideas.md), 53 candidate projects, three or more per SDG, none final
 - [backlog/open-data-register.md](backlog/open-data-register.md), verified free APIs per SDG, SDG icon rules, Digital Public Goods indicators
 

@@ -8,7 +8,7 @@ October only works if September removes every decision and every setup task from
 - [ ] Collision check on "31 Days of Good" comes back clean, or a new name is picked.
 - [ ] Dom creates the `marigold-builds` GitHub org and the Marigold Builds accounts on Bluesky, a bot-friendly Mastodon instance, and dev.to; stores app passwords and API keys as org secrets. (Only Dom can create accounts.)
 - [ ] Dom decides on a domain (optional, the only spend).
-- [ ] Confirm the SDG calendar in [../backlog/calendar.md](../backlog/calendar.md) or reorder it.
+- [x] Struck the pre-assigned SDG calendar (Decided 21): `data/calendar.json` now carries only day and date; [../backlog/calendar.md](../backlog/calendar.md) keeps September's SDG-and-observance research as a marked, non-binding reference instead.
 
 ## Week 2 · 14–20 Sep · Build the machine
 
@@ -33,7 +33,7 @@ October only works if September removes every decision and every setup task from
 
 - [ ] Site live with the calendar and the disclosure.
 - [ ] Announcement posts in the queue for 30 Sep evening and 1 Oct morning.
-- [ ] Day 1 (SDG badge and GitHub Action) research pre-seeded; it is built the night of 30 Sep and goes live 08:00 on 1 Oct.
+- [ ] Day 1 research pre-seeded (whatever it turns out to be — no project is pre-assigned, Decided 21); it is built the night of 30 Sep and goes live 08:00 on 1 Oct.
 - [ ] Go / no-go with Dom on 29 Sep.
 
 ## Definition of ready (30 Sep)

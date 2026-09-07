@@ -47,8 +47,8 @@ At the start of Discover (20:45), the builder lists issues labelled `triage` and
 ## From request to calendar
 
 - Scored requests sit in the open list ordered by score. Discover for each night starts by reading the top requests for that night's SDG, then any request above 14 regardless of SDG.
-- A request above 14 with a verified user beats the calendar's seed idea for that night. The SDG slot can move; the log records why.
-- Flex nights (see [../backlog/calendar.md](../backlog/calendar.md)) take the highest-scored open request or a follow-up on a tool that is being used, whichever has the stronger signal.
+- A request above 14 with a verified user is a strong front-runner for that night, whichever SDG it serves; no night has a pre-assigned SDG or project to beat (Decided 21), and the log records how the night's SDG and project were actually chosen.
+- Flex nights (see [02-daily-process.md](02-daily-process.md)) take the highest-scored open request or a follow-up on a tool that is being used, whichever has the stronger signal.
 - When a tool ships for a request, the "Built" template is posted, the requester is contacted through the contact they gave (drafted into the queue for Dom), and the issue is closed with the repo link. Their feedback in the first seven days is the first line of the retro.
 
 ## Follow-up measurement
