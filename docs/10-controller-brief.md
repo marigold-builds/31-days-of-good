@@ -29,6 +29,8 @@ Minor findings go into `## Observed` on the board as deferred rows, not into the
 
 A running plan does not wait on a human. Ambiguities, plan defects and reviewer findings that contradict the plan are yours to rule on. The spec (`docs/`) is the binding authority; the plan is its argument. Write every ruling into `BOARD.md ## Decided` as a numbered entry with the reasoning and the cost if wrong, in the same commit as the action it justifies.
 
+Dom has given the controller standing authorisation to update `docs/07-decisions.md` — add rows and keep the still-open list true without asking. That is bookkeeping, not a licence to decide for him: a decision he has not made still goes in the row's note as open.
+
 **Open a Fable session for a ruling when** it would change a public commitment (the disclosure, a licence, the calendar), override a Global Constraint, or when two readings of the spec lead to materially different work and neither is obviously right. State the question in one paragraph in the board row's note, set the row `blocked`, and tell Dom.
 
 ## When to stop

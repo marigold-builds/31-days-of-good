@@ -23,10 +23,11 @@ Decisions Dom made on 6 September 2026, in conversation, plus defaults applied w
 | 18 | Community track | A hashtag movement (`#31DaysOfGood`), not a programme: no submissions or moderation; we publish the bar and share the inbox; register as a Hacktoberfest Fest | Playbook "Community track" section |
 | 15 | Reserved days | *Default applied:* none | Calendar reorderable until 13 Sep |
 | 19 | SDG icon vs. colour on tiles | **No UN icon graphics.** Tiles carry the SDG number, title and colour only; the plan's Global Constraint already said this and the build follows it | `docs/04-identity.md`, `docs/02-daily-process.md` and `docs/05-marketing-playbook.md` amended to match (final review, 6 Sep; scoped re-review, 6 Sep) |
+| 20 | Publish credential names | `BLUESKY_APP_PASSWORD` as an organisation **secret**, `BLUESKY_HANDLE` as an organisation **variable** (the handle is public; keeping it out of the secret store keeps Action logs readable). Both scoped to `31-days-of-good` | Stored by Dom 7 Sep. The W12 pipeline is written against these exact names; Mastodon and dev.to follow the same pattern when their accounts exist. The builder never sees the values |
 
 ## Still open
 
-- **Claim the handles.** Availability is not a reservation. Dom should register `marigold-builds` on GitHub and the Marigold Builds handles on Bluesky, Mastodon and dev.to this week. `31daysofgood` as a secondary handle is optional.
+- **Claim the remaining handles.** Availability is not a reservation. `marigold-builds` on GitHub and the Bluesky account are done (7 Sep), with the Bluesky app password and handle stored as org credentials per decision 20. Still to register: the Mastodon account on a bot-friendly instance, and dev.to. `31daysofgood` as a secondary handle is optional.
 - **Domain**, if Dom wants one: `marigoldbuilds.dev`, `marigoldbuilds.com` and `31daysofgood.org` all showed no DNS record on 6 Sep.
 - **Hashtag spot-check** of #31DaysOfGood and #MarigoldBuilds from a logged-in account before launch; web search could not see live feeds.
 - **Mastodon instance** for the bot-flagged account: Dom's choice; mastodon.social permits bots when flagged.
