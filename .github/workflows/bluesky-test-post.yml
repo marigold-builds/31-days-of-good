@@ -1,0 +1,251 @@
+name: bluesky-test-post
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+        description: >-
+          Exact text to post to the live marigoldbuilds.bsky.social account (max 300
+          graphemes). Posted unaltered, with no default: you must choose the wording
+          deliberately before every run.
+        type: string
+        required: true
+      confirm:
+        description: >-
+          Type POST (exactly, capital letters) to confirm you want to publish this to the
+          live, public account. Any other value stops the run before anything happens.
+        type: string
+        required: true
+      keep:
+        description: >-
+          What to do with the post once it has been created and verified. The safe default
+          deletes it again; choose "keep" only if you want it to stay live.
+        type: choice
+        options:
+          - delete-after-verifying
+          - keep
+        default: delete-after-verifying
+        required: true
+
+permissions: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate inputs
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+          POST_TEXT: ${{ inputs.text }}
+        run: |
+          set -euo pipefail
+
+          if [ "$CONFIRM" != "POST" ]; then
+            echo "::error::confirm must be exactly 'POST' to publish. Got a different value; refusing to proceed. No post has been created."
+            exit 1
+          fi
+
+          if [ -z "$POST_TEXT" ]; then
+            echo "::error::text must not be empty. No post has been created."
+            exit 1
+          fi
+
+          # Bluesky's 300-character limit is measured in *grapheme clusters*
+          # (what a person would call one visible "character"), not bytes and
+          # not UTF-16 code units. Correctly counting grapheme clusters needs
+          # the full Unicode text-segmentation algorithm (UAX #29), which is
+          # not available on this runner without adding a dependency.
+          #
+          # Instead we count Unicode *codepoints* with jq, whose `length`
+          # filter on a string returns a codepoint count (unlike bash's
+          # `${#var}`, which is byte- or locale-dependent, and unlike a
+          # UTF-16 length, which would split astral characters into
+          # surrogate pairs). A grapheme cluster is always made up of one or
+          # more codepoints, so the codepoint count is always >= the true
+          # grapheme count. Checking the codepoint count against 300 is
+          # therefore a SAFE, conservative gate: it can never let through
+          # text that is actually over the 300-grapheme limit.
+          #
+          # Its known imperfection runs the other way: it can reject text
+          # that is genuinely within 300 graphemes if that text is rich in
+          # multi-codepoint grapheme clusters -- combining diacritics, ZWJ
+          # emoji sequences (e.g. family or profession emoji), skin-tone
+          # modifiers, or regional-indicator flag pairs -- each of which is
+          # one grapheme built from several codepoints. For a single test
+          # post, over-rejection is the acceptable failure mode; silently
+          # posting something over the real limit is not.
+          codepoint_count=$(printf '%s' "$POST_TEXT" | jq -Rs 'length')
+
+          if [ "$codepoint_count" -gt 300 ]; then
+            echo "::error::text is ${codepoint_count} Unicode codepoints, which is already over Bluesky's 300-grapheme limit (codepoint count is an upper bound on grapheme count). Shorten it. No post has been created."
+            exit 1
+          fi
+
+          echo "Input validation passed (confirm=POST, text is ${codepoint_count} Unicode codepoints, so at most that many graphemes)."
+
+      - name: Authenticate, publish, verify, and clean up
+        env:
+          BLUESKY_HANDLE: ${{ vars.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          POST_TEXT: ${{ inputs.text }}
+          KEEP_CHOICE: ${{ inputs.keep }}
+        run: |
+          set -euo pipefail
+
+          session_file="$(mktemp)"
+          create_file="$(mktemp)"
+          get_file="$(mktemp)"
+          delete_file="$(mktemp)"
+          trap 'rm -f "$session_file" "$create_file" "$get_file" "$delete_file"' EXIT
+
+          # --- Authenticate (same pattern as check-credentials.yml) ---
+          http_status=$(
+            jq -n '{identifier: env.BLUESKY_HANDLE, password: env.BLUESKY_APP_PASSWORD}' \
+            | curl --silent --show-error --output "$session_file" --write-out '%{http_code}' \
+                --request POST 'https://bsky.social/xrpc/com.atproto.server.createSession' \
+                --header 'Content-Type: application/json' \
+                --data @-
+          )
+
+          if ! jq empty "$session_file" >/dev/null 2>&1; then
+            echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON during authentication. Refusing to print it. No post has been created."
+            exit 1
+          fi
+
+          case "$http_status" in
+            2[0-9][0-9]) : ;;
+            *)
+              error_code=$(jq -r '.error // "unknown"' "$session_file")
+              error_message=$(jq -r '.message // "no message"' "$session_file")
+              echo "::error::Bluesky authentication failed (HTTP ${http_status}): ${error_code} - ${error_message}. No post has been created."
+              exit 1
+              ;;
+          esac
+
+          access_jwt=$(jq -r '.accessJwt // empty' "$session_file")
+          did=$(jq -r '.did // empty' "$session_file")
+          handle=$(jq -r '.handle // empty' "$session_file")
+
+          if [ -z "$access_jwt" ] || [ -z "$did" ] || [ -z "$handle" ]; then
+            echo "::error::Authentication response was missing accessJwt, did, or handle. Response shape may have changed; refusing to print it. No post has been created."
+            exit 1
+          fi
+
+          echo "Authenticated as ${handle} (did=${did})."
+
+          # --- Create exactly one post record ---
+          created_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+          record_json=$(jq -n \
+            --arg text "$POST_TEXT" \
+            --arg createdAt "$created_at" \
+            '{"$type": "app.bsky.feed.post", text: $text, createdAt: $createdAt}')
+
+          http_status=$(
+            jq -n --arg repo "$did" --argjson record "$record_json" \
+              '{repo: $repo, collection: "app.bsky.feed.post", record: $record}' \
+            | curl --silent --show-error --output "$create_file" --write-out '%{http_code}' \
+                --request POST 'https://bsky.social/xrpc/com.atproto.repo.createRecord' \
+                --header 'Content-Type: application/json' \
+                --header "Authorization: Bearer ${access_jwt}" \
+                --data @-
+          )
+
+          if ! jq empty "$create_file" >/dev/null 2>&1; then
+            echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while creating the post. Refusing to print it. WHETHER A POST WAS CREATED IS UNKNOWN -- check https://bsky.app/profile/${handle} manually."
+            exit 1
+          fi
+
+          case "$http_status" in
+            2[0-9][0-9]) : ;;
+            *)
+              error_code=$(jq -r '.error // "unknown"' "$create_file")
+              error_message=$(jq -r '.message // "no message"' "$create_file")
+              echo "::error::Creating the post failed (HTTP ${http_status}): ${error_code} - ${error_message}. No post has been created."
+              exit 1
+              ;;
+          esac
+
+          record_uri=$(jq -r '.uri // empty' "$create_file")
+          record_cid=$(jq -r '.cid // empty' "$create_file")
+
+          if [ -z "$record_uri" ] || [ -z "$record_cid" ]; then
+            echo "::error::createRecord returned HTTP ${http_status} but the response was missing uri or cid. Refusing to print the raw body. WHETHER A POST WAS CREATED IS UNKNOWN -- check https://bsky.app/profile/${handle} manually."
+            exit 1
+          fi
+
+          rkey="${record_uri##*/}"
+          public_url="https://bsky.app/profile/${handle}/post/${rkey}"
+
+          # From here on, a post EXISTS. Print its identity immediately, before
+          # attempting anything else, so a later failure still leaves a clear,
+          # unambiguous record of what was published and where to find it.
+          echo "Post created."
+          echo "AT URI: ${record_uri}"
+          echo "CID: ${record_cid}"
+          echo "Public URL: ${public_url}"
+
+          # --- Verify by reading the record back ---
+          http_status=$(
+            curl --silent --show-error --output "$get_file" --write-out '%{http_code}' \
+                --request GET "https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=app.bsky.feed.post&rkey=${rkey}" \
+                --header "Authorization: Bearer ${access_jwt}"
+          )
+
+          if ! jq empty "$get_file" >/dev/null 2>&1; then
+            echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while verifying the post. Refusing to print it. THE POST ABOVE EXISTS (${record_uri}) but could not be verified by read-back -- check it manually."
+            exit 1
+          fi
+
+          case "$http_status" in
+            2[0-9][0-9]) : ;;
+            *)
+              error_code=$(jq -r '.error // "unknown"' "$get_file")
+              error_message=$(jq -r '.message // "no message"' "$get_file")
+              echo "::error::Verifying the post failed (HTTP ${http_status}): ${error_code} - ${error_message}. THE POST ABOVE EXISTS (${record_uri}) but could not be verified by read-back -- check it manually."
+              exit 1
+              ;;
+          esac
+
+          verified_uri=$(jq -r '.uri // empty' "$get_file")
+          verified_cid=$(jq -r '.cid // empty' "$get_file")
+
+          if [ "$verified_uri" != "$record_uri" ] || [ "$verified_cid" != "$record_cid" ]; then
+            echo "::error::The read-back record does not match what was created (uri or cid mismatch). THE POST ABOVE EXISTS (${record_uri}) -- investigate manually."
+            exit 1
+          fi
+
+          echo "Verified: the record at ${record_uri} exists and matches what was created."
+
+          # --- Delete (default) or keep, per the keep input ---
+          if [ "$KEEP_CHOICE" = "keep" ]; then
+            echo "keep=keep was requested. The post is LIVE and has been left up at ${public_url}."
+            exit 0
+          fi
+
+          http_status=$(
+            jq -n --arg repo "$did" --arg rkey "$rkey" \
+              '{repo: $repo, collection: "app.bsky.feed.post", rkey: $rkey}' \
+            | curl --silent --show-error --output "$delete_file" --write-out '%{http_code}' \
+                --request POST 'https://bsky.social/xrpc/com.atproto.repo.deleteRecord' \
+                --header 'Content-Type: application/json' \
+                --header "Authorization: Bearer ${access_jwt}" \
+                --data @-
+          )
+
+          if ! jq empty "$delete_file" >/dev/null 2>&1; then
+            echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while deleting the post. Refusing to print it. THE POST ABOVE STILL EXISTS (${record_uri}) -- it was verified but deletion status is UNKNOWN. Check and delete it manually if needed."
+            exit 1
+          fi
+
+          case "$http_status" in
+            2[0-9][0-9]) : ;;
+            *)
+              error_code=$(jq -r '.error // "unknown"' "$delete_file")
+              error_message=$(jq -r '.message // "no message"' "$delete_file")
+              echo "::error::Deleting the post failed (HTTP ${http_status}): ${error_code} - ${error_message}. THE POST ABOVE STILL EXISTS (${record_uri}) -- it was verified but not deleted. Delete it manually."
+              exit 1
+              ;;
+          esac
+
+          echo "Post created, verified, and deleted (${record_uri})."
+          echo "Deletion removes the post from Bluesky's own views. It does NOT retract it from the firehose: relays and archives that observed it while live may still hold a copy."
