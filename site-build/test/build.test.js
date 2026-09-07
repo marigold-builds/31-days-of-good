@@ -23,6 +23,21 @@ test('build writes index, 31 day pages, 31 tiles and css', async () => {
   assert.match(day1, /<em>text<\/em>/);
 });
 
+// Decided 21: data/calendar.json carries only day and date, so every day
+// without a log (days 2-31 here) must build cleanly and render as honestly
+// unchosen end to end, not crash on a missing SDG and not invent a name.
+test('build renders an unbuilt day (no log, no SDG) honestly on its card and its own page', async () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'site-'));
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  await build({ outDir, calendarPath: CAL, logDir, baseUrl: '/' });
+  const index = readFileSync(join(outDir, 'index.html'), 'utf8');
+  assert.match(index, /Not yet chosen/);
+  assert.match(index, /SDG not yet chosen/);
+  const day2 = readFileSync(join(outDir, 'day', '02', 'index.html'), 'utf8');
+  assert.match(day2, /<h1>Not yet chosen<\/h1>/);
+  assert.match(day2, /SDG not yet chosen/);
+});
+
 test('markdown renders the real daily-brief template with a table and an ordered list', () => {
   const html = markdown(readFileSync(join(TEMPLATES, 'daily-brief.md'), 'utf8'));
   assert.match(html, /<table>[\s\S]*<th>Source<\/th>[\s\S]*<\/table>/);

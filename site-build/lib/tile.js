@@ -1,8 +1,11 @@
 import { Resvg } from '@resvg/resvg-js';
-import { SDGS } from './days.js';
+import { SDGS, UNCHOSEN_NAME, UNCHOSEN_TAGLINE, UNCHOSEN_SDG_LABEL } from './days.js';
 import { wrap, TITLE_WRAP_MAX_CHARS, TITLE_MAX_LINES } from './wrap.js';
 
-const MARIGOLD = '#F4A300';
+// The programme's identity colour (docs/04-identity.md), used for a tile
+// whose night has no SDG yet - see the comment on UNCHOSEN_* in
+// lib/days.js. Never invent an SDG just to have a colour for the stripe.
+export const MARIGOLD = '#F4A300';
 const FONT = 'system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
 
 export function escapeXml(s) {
@@ -47,23 +50,30 @@ function layoutTitle(title) {
 }
 
 export function tileSvg(day) {
-  const colour = SDGS[day.sdg[0]].colour;
-  const title = day.name || day.seed;
-  const tagline = day.tagline || (day.status === 'planned' ? `Planned: ${day.archetype} for SDG ${day.sdg.join(' and ')}` : '');
+  const hasSdg = Array.isArray(day.sdg) && day.sdg.length > 0;
+  const colour = hasSdg ? SDGS[day.sdg[0]].colour : MARIGOLD;
+  const title = day.name || UNCHOSEN_NAME;
+  const tagline = day.tagline || (day.status === 'planned' ? UNCHOSEN_TAGLINE : '');
   const lines = wrap(tagline, 48);
   const tspans = lines.map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : 48}">${escapeXml(l)}</tspan>`).join('');
-  const sdgLabel = day.sdg.map((n) => `SDG ${n}`).join(' + ');
   const titleLayout = layoutTitle(title);
   const titleContent = titleLayout.lines.length > 1
     ? titleLayout.lines.map((l, i) => `<tspan x="80" dy="${i === 0 ? 0 : titleLayout.lineHeight}">${escapeXml(l)}</tspan>`).join('')
     : escapeXml(titleLayout.lines[0]);
+  // A day with a chosen SDG gets its number and title in the SDG's own
+  // colour, on two lines. A day with no SDG yet gets one plain, muted line
+  // saying so - never a colour or a title standing in for a goal nobody
+  // has picked.
+  const sdgHeader = hasSdg
+    ? `<text x="1120" y="110" text-anchor="end" font-family='${FONT}' font-size="30" fill="${colour}" font-weight="700">${escapeXml(day.sdg.map((n) => `SDG ${n}`).join(' + '))}</text>
+<text x="1120" y="150" text-anchor="end" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(day.sdgTitle)}</text>`
+    : `<text x="1120" y="130" text-anchor="end" font-family='${FONT}' font-size="28" fill="#888888">${escapeXml(UNCHOSEN_SDG_LABEL)}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
 <rect width="1200" height="630" fill="#FFFFFF"/>
 <rect x="0" y="0" width="28" height="630" fill="${colour}"/>
 <rect x="0" y="0" width="1200" height="10" fill="${MARIGOLD}"/>
 <text x="80" y="110" font-family='${FONT}' font-size="30" fill="#555555">Day ${day.day} of 31</text>
-<text x="1120" y="110" text-anchor="end" font-family='${FONT}' font-size="30" fill="${colour}" font-weight="700">${escapeXml(sdgLabel)}</text>
-<text x="1120" y="150" text-anchor="end" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(day.sdgTitle)}</text>
+${sdgHeader}
 <text x="80" y="${titleLayout.y}" font-family='${FONT}' font-size="${titleLayout.fontSize}" font-weight="700" fill="#111111">${titleContent}</text>
 <text x="80" y="330" font-family='${FONT}' font-size="36" fill="#333333">${tspans}</text>
 <text x="80" y="500" font-family='${FONT}' font-size="26" fill="#555555">${escapeXml(STATUS_LABEL[day.status])} · ${escapeXml(day.date)}</text>

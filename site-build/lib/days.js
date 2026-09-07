@@ -8,6 +8,15 @@ const STATUSES = new Set(['planned', 'shipped', 'partial', 'missed']);
 const LOG_FILENAME = /^(\d{4})-(\d{2})-(\d{2})\.md$/;
 const HTTPS_URL = /^https:\/\//;
 
+// Decided 21 (docs/07-decisions.md): data/calendar.json carries only `day`
+// and `date`. Nothing else is assigned to a night in advance - a night's
+// SDG, name, tagline and observance exist only once that night's own log
+// records them. These are the honest words for a night nobody has worked
+// yet; they must never look like a chosen name, goal or description.
+export const UNCHOSEN_NAME = 'Not yet chosen';
+export const UNCHOSEN_TAGLINE = "Tonight's SDG and project are chosen during the night's own research, not before";
+export const UNCHOSEN_SDG_LABEL = 'SDG not yet chosen';
+
 function unquote(v) {
   if (v.length >= 2) {
     const first = v[0], last = v[v.length - 1];
@@ -36,6 +45,21 @@ function checkUrl(value, label, filename) {
   if (!HTTPS_URL.test(value)) {
     throw new Error(`Log file "${filename}": ${label} "${value}" must be a full https:// URL`);
   }
+}
+
+// A built day's SDG is no longer carried by calendar.json (Decided 21) - it
+// is chosen during that night's own research and recorded in the log's
+// front matter as a comma-separated list of SDG numbers, e.g. "11,17".
+function parseSdg(value, filename) {
+  if (value === undefined || value === '') return null;
+  const nums = String(value).split(',').map((s) => s.trim()).filter(Boolean).map(Number);
+  if (nums.length === 0) return null;
+  for (const n of nums) {
+    if (!Number.isInteger(n) || !SDGS[n]) {
+      throw new Error(`Log file "${filename}": sdg "${value}" must be a comma-separated list of SDG numbers 1-17`);
+    }
+  }
+  return nums;
 }
 
 export function loadDays({ calendarPath, logDir }) {
@@ -85,17 +109,21 @@ export function loadDays({ calendarPath, logDir }) {
       }
       checkUrl(meta.repo, 'repo', f);
       checkUrl(meta.demo, 'demo', f);
+      const sdg = parseSdg(meta.sdg, f);
 
-      logs.set(day, { ...meta, logPath: f });
+      logs.set(day, { ...meta, sdg, logPath: f });
     }
   }
   return calendar.map((entry) => {
     const log = logs.get(entry.day) || {};
     const status = log.status || 'planned';
     if (!STATUSES.has(status)) throw new Error(`Day ${entry.day}: unknown status "${status}"`);
+    const sdg = log.sdg || null;
     return {
       ...entry,
-      sdgTitle: entry.sdg.map((n) => SDGS[n].title).join(' + '),
+      sdg,
+      sdgTitle: sdg ? sdg.map((n) => SDGS[n].title).join(' + ') : null,
+      observance: blankToNull(log.observance),
       name: blankToNull(log.name),
       tagline: blankToNull(log.tagline),
       status,

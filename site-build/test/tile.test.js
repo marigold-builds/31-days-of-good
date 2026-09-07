@@ -1,10 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { Resvg } from '@resvg/resvg-js';
-import { tileSvg, tilePng, escapeXml, wrap } from '../lib/tile.js';
+import { tileSvg, tilePng, escapeXml, wrap, MARIGOLD } from '../lib/tile.js';
+import { UNCHOSEN_NAME, UNCHOSEN_SDG_LABEL } from '../lib/days.js';
 
 const day = { day: 6, date: '2026-10-06', sdg: [11], sdgTitle: 'Sustainable Cities and Communities',
-  observance: 'World Habitat Day', archetype: 'Static map tool', seed: 'walkshed',
+  observance: 'World Habitat Day',
   name: 'walkshed', tagline: '15-minute walking isochrones from OpenStreetMap, no key.',
   status: 'shipped', repo: 'x', demo: null, logPath: null };
 
@@ -23,10 +24,26 @@ test('tileSvg contains day, SDG, name, tagline and colour', () => {
   assert.match(svg, /Marigold Builds/);
 });
 
-test('tileSvg for a planned day shows the seed and Planned', () => {
+// A day whose SDG is known but has not been built yet must not invent a
+// name - it says plainly that nothing is chosen (Decided 21).
+test('tileSvg for a planned day with a known SDG shows the honest unchosen name, not a seed', () => {
   const svg = tileSvg({ ...day, name: null, tagline: null, status: 'planned' });
   assert.match(svg, /Planned/);
-  assert.match(svg, /walkshed/);
+  assert.match(svg, new RegExp(`>${UNCHOSEN_NAME}<`));
+  assert.ok(!svg.includes('walkshed'));
+});
+
+// A day with no log at all has no SDG either. The tile must fall back to
+// the marigold identity colour, not invent an SDG to colour it with, and
+// the SDG header must say plainly that none is chosen yet.
+test('tileSvg for a fully unbuilt day (no SDG) uses the marigold colour and an honest SDG label', () => {
+  const unbuilt = { day: 9, date: '2026-10-09', sdg: null, sdgTitle: null, observance: null,
+    name: null, tagline: null, status: 'planned', repo: null, demo: null, logPath: null };
+  const svg = tileSvg(unbuilt);
+  assert.match(svg, new RegExp(`fill="${MARIGOLD}"/>\\s*<rect x="0" y="0" width="1200" height="10"`));
+  assert.match(svg, new RegExp(escapeXml(UNCHOSEN_SDG_LABEL)));
+  assert.match(svg, new RegExp(`>${UNCHOSEN_NAME}<`));
+  assert.ok(!svg.includes('SDG 9'), 'must not invent an SDG number for the day-of-31 count');
 });
 
 test('tileSvg wraps a long tagline onto more than one line', () => {

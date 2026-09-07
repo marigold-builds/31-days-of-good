@@ -20,25 +20,55 @@ test('parseFrontMatter without front matter returns empty meta', () => {
   assert.equal(body, 'just text');
 });
 
-test('loadDays returns 31 planned days with SDG titles when log is empty', () => {
+// Decided 21: data/calendar.json carries only day and date, so a day with
+// no log has no SDG - it has not been chosen yet. loadDays must not invent
+// one, and sdgTitle must not be computed from a non-existent sdg.
+test('loadDays returns 31 planned days with no SDG, name or observance when log is empty', () => {
   const logDir = mkdtempSync(join(tmpdir(), 'log-'));
   const days = loadDays({ calendarPath: CAL, logDir });
   assert.equal(days.length, 31);
   assert.equal(days[0].status, 'planned');
-  assert.equal(days[0].sdgTitle, 'Partnerships for the Goals');
-  assert.equal(days[30].sdgTitle, 'Sustainable Cities and Communities + Partnerships for the Goals');
+  assert.equal(days[0].sdg, null);
+  assert.equal(days[0].sdgTitle, null);
+  assert.equal(days[0].observance, null);
   assert.equal(days[0].name, null);
+  assert.equal(days[0].tagline, null);
+  assert.equal(days[0].day, 1);
+  assert.equal(days[0].date, '2026-10-01');
 });
 
-test('loadDays merges a log entry by day number', () => {
+test('loadDays merges a log entry by day number, including its SDG and observance', () => {
   const logDir = mkdtempSync(join(tmpdir(), 'log-'));
   writeFileSync(join(logDir, '2026-10-01.md'),
-    '---\nday: 1\nname: sdg-badge\ntagline: A badge.\nstatus: shipped\nrepo: https://github.com/marigold-builds/sdg-badge\ndemo:\n---\nbody');
+    '---\nday: 1\nname: sdg-badge\ntagline: A badge.\nsdg: 17\nobservance: International Day of Older Persons\nstatus: shipped\nrepo: https://github.com/marigold-builds/sdg-badge\ndemo:\n---\nbody');
   const days = loadDays({ calendarPath: CAL, logDir });
   assert.equal(days[0].name, 'sdg-badge');
+  assert.deepEqual(days[0].sdg, [17]);
+  assert.equal(days[0].sdgTitle, 'Partnerships for the Goals');
+  assert.equal(days[0].observance, 'International Day of Older Persons');
   assert.equal(days[0].status, 'shipped');
   assert.equal(days[0].demo, null);
   assert.equal(days[0].logPath, '2026-10-01.md');
+});
+
+test('loadDays parses a multi-SDG log entry and joins their titles', () => {
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  writeFileSync(join(logDir, '2026-10-31.md'), '---\nday: 31\nsdg: 11,17\nstatus: shipped\n---\nbody');
+  const days = loadDays({ calendarPath: CAL, logDir });
+  assert.deepEqual(days[30].sdg, [11, 17]);
+  assert.equal(days[30].sdgTitle, 'Sustainable Cities and Communities + Partnerships for the Goals');
+});
+
+test('loadDays rejects an sdg number outside 1-17', () => {
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  writeFileSync(join(logDir, '2026-10-01.md'), '---\nday: 1\nsdg: 18\nstatus: shipped\n---\nbody');
+  assert.throws(() => loadDays({ calendarPath: CAL, logDir }), /sdg/);
+});
+
+test('loadDays rejects a non-numeric sdg', () => {
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  writeFileSync(join(logDir, '2026-10-01.md'), '---\nday: 1\nsdg: seventeen\nstatus: shipped\n---\nbody');
+  assert.throws(() => loadDays({ calendarPath: CAL, logDir }), /sdg/);
 });
 
 test('loadDays rejects an unknown status', () => {

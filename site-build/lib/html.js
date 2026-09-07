@@ -1,5 +1,5 @@
-import { escapeXml as esc } from './tile.js';
-import { SDGS } from './days.js';
+import { escapeXml as esc, MARIGOLD } from './tile.js';
+import { SDGS, UNCHOSEN_NAME, UNCHOSEN_TAGLINE, UNCHOSEN_SDG_LABEL } from './days.js';
 
 export const DISCLOSURE = 'Marigold Builds is Claude, an AI model by Anthropic, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom sets the calendar, can veto each brief, merges every day&apos;s posts before they go out, and is accountable for what ships.';
 
@@ -31,12 +31,16 @@ const DESCRIPTION = 'One small open-source tool a night for the UN Sustainable D
 
 export function renderIndex(days, { baseUrl, siteOrigin = '' }) {
   const tiles = days.map((d) => {
-    const colour = SDGS[d.sdg[0]].colour;
+    const hasSdg = Array.isArray(d.sdg) && d.sdg.length > 0;
+    const colour = hasSdg ? SDGS[d.sdg[0]].colour : MARIGOLD;
+    const sdgLine = hasSdg ? `SDG ${d.sdg.join(' + ')} · ${esc(d.sdgTitle)}` : esc(UNCHOSEN_SDG_LABEL);
+    const name = d.name || UNCHOSEN_NAME;
+    const tagline = d.tagline || UNCHOSEN_TAGLINE;
     return `<li><a class="tile" style="--sdg:${colour}" data-status="${d.status}" href="${baseUrl}day/${pad(d.day)}/">
 <div class="day">Day ${d.day} · ${esc(d.date)}</div>
-<div class="sdg">SDG ${d.sdg.join(' + ')} · ${esc(d.sdgTitle)}</div>
-<div class="name">${esc(d.name || d.seed)}</div>
-<div class="tagline">${esc(d.tagline || d.archetype)}</div>
+<div class="sdg">${sdgLine}</div>
+<div class="name">${esc(name)}</div>
+<div class="tagline">${esc(tagline)}</div>
 ${d.status !== 'planned' ? `<div class="status">${STATUS[d.status]}</div>` : ''}
 </a></li>`;
   }).join('\n');
@@ -62,7 +66,12 @@ ${tiles}
 }
 
 export function renderDay(d, bodyHtml, { baseUrl, siteOrigin = '' }) {
-  const title = `Day ${d.day} · ${d.name || d.seed} · 31 Days of Good`;
+  const hasSdg = Array.isArray(d.sdg) && d.sdg.length > 0;
+  const name = d.name || UNCHOSEN_NAME;
+  const tagline = d.tagline || UNCHOSEN_TAGLINE;
+  const sdgMeta = hasSdg ? `SDG ${d.sdg.join(' + ')} · ${esc(d.sdgTitle)}` : esc(UNCHOSEN_SDG_LABEL);
+  const sdgAlt = hasSdg ? `SDG ${d.sdg.join(' and ')}, ${esc(d.sdgTitle)}.` : `${esc(UNCHOSEN_SDG_LABEL)}.`;
+  const title = `Day ${d.day} · ${name} · 31 Days of Good`;
   const img = `${baseUrl}tiles/day-${pad(d.day)}.png`;
   const links = [
     d.repo ? `<a href="${esc(d.repo)}">Repository</a>` : '',
@@ -72,16 +81,16 @@ export function renderDay(d, bodyHtml, { baseUrl, siteOrigin = '' }) {
     title, baseUrl,
     head: `<meta property="og:title" content="${esc(title)}">
 <meta property="og:image" content="${siteOrigin}${img}">
-<meta property="og:description" content="${esc(d.tagline || d.archetype)}">`,
+<meta property="og:description" content="${esc(tagline)}">`,
     body: `<header>
 <p class="meta"><a href="${baseUrl}">31 Days of Good</a> · Day ${d.day} of 31 · ${esc(d.date)}</p>
-<h1>${esc(d.name || d.seed)}</h1>
-<p class="lede">${esc(d.tagline || `Planned: ${d.archetype}`)}</p>
-<p class="meta">SDG ${d.sdg.join(' + ')} · ${esc(d.sdgTitle)}${d.observance ? ` · ${esc(d.observance)}` : ''} · ${STATUS[d.status]}</p>
+<h1>${esc(name)}</h1>
+<p class="lede">${esc(tagline)}</p>
+<p class="meta">${sdgMeta}${d.observance ? ` · ${esc(d.observance)}` : ''} · ${STATUS[d.status]}</p>
 ${links ? `<p>${links}</p>` : ''}
 </header>
 <main class="day-page">
-<img src="${img}" alt="Day ${d.day} of 31 Days of Good. SDG ${d.sdg.join(' and ')}, ${esc(d.sdgTitle)}. ${esc(d.name || d.seed)}: ${esc(d.tagline || d.archetype)}.">
+<img src="${img}" alt="Day ${d.day} of 31 Days of Good. ${sdgAlt} ${esc(name)}: ${esc(tagline)}.">
 ${bodyHtml}
 </main>`,
   });
