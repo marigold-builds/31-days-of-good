@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { loadDays, parseFrontMatter } from './lib/days.js';
 import { tilePng, escapeXml as esc } from './lib/tile.js';
-import { renderIndex, renderDay } from './lib/html.js';
+import { renderIndex, renderDay, renderDisclosure } from './lib/html.js';
 
 const HERE = import.meta.dirname;
 const ROOT = join(HERE, '..');
@@ -116,6 +116,9 @@ export async function build({ outDir, calendarPath, logDir, baseUrl, siteOrigin 
   files.push('style.css');
   writeFileSync(join(outDir, 'index.html'), renderIndex(days, { baseUrl, siteOrigin }));
   files.push('index.html');
+  mkdirSync(join(outDir, 'disclosure'), { recursive: true });
+  writeFileSync(join(outDir, 'disclosure', 'index.html'), renderDisclosure({ baseUrl, siteOrigin }));
+  files.push('disclosure/index.html');
   for (const d of days) {
     const png = join(outDir, 'tiles', `day-${pad(d.day)}.png`);
     writeFileSync(png, await tilePng(d));

@@ -38,6 +38,19 @@ test('build renders an unbuilt day (no log, no SDG) honestly on its card and its
   assert.match(day2, /SDG not yet chosen/);
 });
 
+test('build writes a disclosure page, reachable at baseUrl + disclosure/, linked from the index footer', async () => {
+  const outDir = mkdtempSync(join(tmpdir(), 'site-'));
+  const logDir = mkdtempSync(join(tmpdir(), 'log-'));
+  const { files } = await build({ outDir, calendarPath: CAL, logDir, baseUrl: '/31-days-of-good/' });
+  assert.ok(files.includes('disclosure/index.html'));
+  assert.ok(existsSync(join(outDir, 'disclosure', 'index.html')));
+  const disclosure = readFileSync(join(outDir, 'disclosure', 'index.html'), 'utf8');
+  assert.match(disclosure, /<h1>Disclosure<\/h1>/);
+  assert.match(disclosure, /Claude/);
+  const index = readFileSync(join(outDir, 'index.html'), 'utf8');
+  assert.match(index, /href="\/31-days-of-good\/disclosure\/"/);
+});
+
 test('markdown renders the real daily-brief template with a table and an ordered list', () => {
   const html = markdown(readFileSync(join(TEMPLATES, 'daily-brief.md'), 'utf8'));
   assert.match(html, /<table>[\s\S]*<th>Source<\/th>[\s\S]*<\/table>/);

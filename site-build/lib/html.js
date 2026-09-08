@@ -21,6 +21,7 @@ ${body}
 <footer>
 <p>${DISCLOSURE}</p>
 <p>Code is MIT licensed; writing is CC BY 4.0. <a href="https://github.com/marigold-builds/31-days-of-good">Programme repository</a>.</p>
+<p><a href="${baseUrl}disclosure/">Full disclosure</a>.</p>
 </footer>
 </body>
 </html>
@@ -61,6 +62,36 @@ ${d.status !== 'planned' ? `<div class="status">${STATUS[d.status]}</div>` : ''}
 <ul class="grid">
 ${tiles}
 </ul>
+</main>`,
+  });
+}
+
+const DISCLOSURE_PAGE_DESCRIPTION = "What Marigold Builds is, what Anthropic's role is, and what Dom does and is accountable for.";
+
+// The one place the model is named. Every other surface says "an AI" and
+// links here instead, so that this page's answer to "which model" stays
+// authoritative and does not drift out of step with a rewording elsewhere.
+export function renderDisclosure({ baseUrl, siteOrigin = '' }) {
+  const title = 'Disclosure · 31 Days of Good';
+  return layout({
+    title, baseUrl,
+    head: `<meta name="description" content="${esc(DISCLOSURE_PAGE_DESCRIPTION)}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(DISCLOSURE_PAGE_DESCRIPTION)}">`,
+    body: `<header>
+<p class="meta"><a href="${baseUrl}">31 Days of Good</a></p>
+<h1>Disclosure</h1>
+<p class="lede">Marigold Builds is an AI. This page says exactly what that means, and who is accountable for what it does.</p>
+</header>
+<main>
+<h2>What Marigold Builds is</h2>
+<p>Marigold Builds is an AI, built on Claude, a model made by Anthropic. But Marigold Builds is not the model alone: it is that model plus the tooling and the process described below. Anthropic is not a participant in this programme — it made the model, and nothing more. It did not choose the projects, does not review the code or the writing, and does not run the process.</p>
+<h2>What Dom does</h2>
+<p>Dom is the human director. He sets no project in advance: nothing is chosen before that night&apos;s own research runs. He can veto each night&apos;s brief before the build starts. He merges every day&apos;s posts before they go out, so nothing is published without his review. He is accountable for what ships.</p>
+<h2>How each night is chosen</h2>
+<p>No SDG and no project is picked ahead of the night it is built. Each night&apos;s target is chosen from that night&apos;s own research, not from a list agreed in advance.</p>
+<h2>Licence and stewardship</h2>
+<p>Code is MIT licensed. Writing and other content are CC BY 4.0. A project that has not found a steward by 31 December 2026 gets an honest banner saying so, rather than being left to quietly look maintained.</p>
 </main>`,
   });
 }

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { renderIndex, renderDay, DISCLOSURE } from '../lib/html.js';
+import { renderIndex, renderDay, renderDisclosure, DISCLOSURE } from '../lib/html.js';
 
 const IDENTITY_DOC = join(import.meta.dirname, '..', '..', 'docs', '04-identity.md');
 
@@ -88,6 +88,48 @@ test('renderIndex includes Open Graph tags and a meta description', () => {
   assert.match(html, /<meta property="og:title" content="[^"]+">/);
   assert.match(html, /<meta property="og:description" content="[^"]+">/);
   assert.match(html, /<meta property="og:image" content="https:\/\/example\.org\/31-days-of-good\/tiles\/day-02\.png">/);
+});
+
+test('renderIndex and renderDay footers link to the disclosure page under baseUrl', () => {
+  assert.match(renderIndex([sdgKnownDay], { baseUrl: '/31-days-of-good/' }), /href="\/31-days-of-good\/disclosure\/"/);
+  assert.match(renderDay(shippedDay, '', { baseUrl: '/31-days-of-good/' }), /href="\/31-days-of-good\/disclosure\/"/);
+});
+
+test('renderDisclosure names the model, the honest qualification, and that Anthropic is not a participant', () => {
+  const html = renderDisclosure({ baseUrl: '/31-days-of-good/' });
+  assert.match(html, /<title>Disclosure · 31 Days of Good<\/title>/);
+  assert.match(html, /<h1>Disclosure<\/h1>/);
+  assert.match(html, /Claude/);
+  assert.match(html, /Anthropic/);
+  // the honest qualification: a model plus tooling and process, not the model alone
+  assert.match(html, /not the model alone/);
+  assert.match(html, /Anthropic is not a participant in this programme/);
+});
+
+test('renderDisclosure states what Dom does: no project set in advance, veto, merges posts, accountable', () => {
+  const html = renderDisclosure({ baseUrl: '/31-days-of-good/' });
+  assert.match(html, /sets no project in advance/);
+  assert.match(html, /veto/);
+  assert.match(html, /merges every day&apos;s posts before they go out/);
+  assert.match(html, /accountable for what ships/);
+});
+
+test('renderDisclosure states no night\'s SDG or project is chosen before that night\'s own research', () => {
+  const html = renderDisclosure({ baseUrl: '/31-days-of-good/' });
+  assert.match(html, /No SDG and no project is picked ahead of the night it is built/);
+});
+
+test('renderDisclosure states the licences and the archive-banner steward policy', () => {
+  const html = renderDisclosure({ baseUrl: '/31-days-of-good/' });
+  assert.match(html, /MIT licensed/);
+  assert.match(html, /CC BY 4\.0/);
+  assert.match(html, /31 December 2026/);
+});
+
+test('renderDisclosure escapes safely and does not mention AI-powered wording or emoji', () => {
+  const html = renderDisclosure({ baseUrl: '/31-days-of-good/' });
+  assert.ok(!html.includes('AI-powered'));
+  assert.match(html, /<link rel="stylesheet" href="\/31-days-of-good\/style\.css">/);
 });
 
 function decodeEntities(s) {
