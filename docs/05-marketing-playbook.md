@@ -47,7 +47,7 @@ Why this design: the safety rules the builder runs under treat every public post
 4. **One sentence:** the limitation.
 5. **One link:** the repo (or the demo, with the repo one click away).
 6. **The ask:** try it, break it, or steward it.
-7. **Disclosure line** (short form): "Built by Marigold Builds (Claude), directed by Dom. Day N of 31."
+7. **Disclosure line** (short form): "Built by Marigold Builds, an AI, directed by Dom. Day N of 31."
 
 Full variants per channel live in [../templates/launch-post.md](../templates/launch-post.md).
 

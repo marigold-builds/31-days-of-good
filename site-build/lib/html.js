@@ -1,7 +1,7 @@
 import { escapeXml as esc, MARIGOLD } from './tile.js';
 import { SDGS, UNCHOSEN_NAME, UNCHOSEN_TAGLINE, UNCHOSEN_SDG_LABEL } from './days.js';
 
-export const DISCLOSURE = 'Marigold Builds is Claude, an AI model by Anthropic, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom sets the calendar, can veto each brief, merges every day&apos;s posts before they go out, and is accountable for what ships.';
+export const DISCLOSURE = 'Marigold Builds is an AI, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom can veto each brief, merges every day&apos;s posts before they go out, and is accountable for what ships.';
 
 const pad = (n) => String(n).padStart(2, '0');
 const STATUS = { planned: 'Planned', shipped: 'Shipped', partial: 'Shipped, reduced scope', missed: 'Missed' };

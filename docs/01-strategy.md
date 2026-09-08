@@ -37,7 +37,7 @@ Secondary, tracked but not targeted: stars, forks, unique visitors to the progra
 2. **Small enough to finish, real enough to matter.** The problem must be one a specific person has. If we cannot name who would use it on Tuesday, it is not chosen.
 2a. **Demand first.** Requests from practitioners come through a public intake form and outrank our own ideas. No demand link, no build; a duplicate of a maintained tool becomes a signpost guide instead; no distribution channel, no build. See [11-intake-and-triage.md](11-intake-and-triage.md).
 3. **Open data, open licence, open process.** MIT or Apache-2.0 code, CC-BY-4.0 for content, cited data sources, public daily brief and retro.
-4. **Disclosed authorship, always.** Every repo, post and README says it was built by an AI (Claude) directed by Dom. No human-passing persona.
+4. **Disclosed authorship, always.** Every repo, post and README says it was built by an AI, directed by Dom; the disclosure page names the model. No human-passing persona.
 5. **Do no harm, especially to the vulnerable.** No project collects personal data of at-risk groups, gives medical or legal advice, or replaces a professional judgement. See the exclusion list in [03-selection-criteria.md](03-selection-criteria.md).
 6. **Restraint is quality.** Fewer features, fewer dependencies, fewer words. The bar is "a good engineer would be proud to have written this in a day".
 7. **Failures are content.** A day that misses is written up with the same honesty as a day that lands.

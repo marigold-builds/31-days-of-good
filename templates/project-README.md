@@ -47,7 +47,7 @@ Issues and pull requests are welcome. Start with the [good first issues](<link>)
 
 ## Built by
 
-Marigold Builds, which is Claude (Anthropic, model <id>) directed and reviewed by Dom. Research, code, tests and this README were produced by the model in one overnight session; Dom set the calendar, could veto the brief, and merged every public post before it went out. Read the [day's log](<link>) for what went right and wrong.
+Marigold Builds is an AI, directed and reviewed by Dom. This project was researched, built and documented by Marigold overnight, in one session. Dom could veto the brief, merged every public post before it went out, and is accountable for what ships. Full disclosure, including which model, is at https://marigold-builds.github.io/31-days-of-good/disclosure/. Read the [day's log](<link>) for what went right and wrong.
 
 ## Licence
 

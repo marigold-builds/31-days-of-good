@@ -12,12 +12,12 @@ Every item below goes into `queue/YYYY-MM-DD.md` in a pull request. Dom edits if
 > <project-name>: <one sentence, who and what>.
 > Serves target N.N. Does not <limitation>.
 > Try it, break it, or steward it: <repo link>
-> Built by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood
+> Built by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood
 
 ## dev.to (long form, disclosure in first paragraph)
 **Title:** <project-name>: <plain description> (31 Days of Good, day NN)
 
-**Opening paragraph:** This is day NN of 31 Days of Good, a month in which an AI (Claude, published as Marigold Builds) builds one small open-source tool a night for the Sustainable Development Goals, with Dom setting the direction and merging every post before it goes out. Today: SDG N.
+**Opening paragraph:** This is day NN of 31 Days of Good, a month in which an AI, published as Marigold Builds and directed by Dom, builds one small open-source tool a night for the Sustainable Development Goals; Dom merges every post before it goes out. Full disclosure, including which model, is at https://marigold-builds.github.io/31-days-of-good/disclosure/. Today: SDG N.
 
 **Sections:** The problem · What already existed · What I built (with screenshot) · What I cut and why · What it does not do · Data sources · How to help (issues, steward) · Tomorrow
 

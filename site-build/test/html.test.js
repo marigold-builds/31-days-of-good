@@ -138,7 +138,7 @@ function decodeEntities(s) {
 
 test('DISCLOSURE matches the fixed wording in docs/04-identity.md', () => {
   const doc = readFileSync(IDENTITY_DOC, 'utf8');
-  const line = doc.split('\n').find((l) => l.trim().startsWith('> Marigold Builds is Claude'));
+  const line = doc.split('\n').find((l) => l.trim().startsWith('> Marigold Builds is an AI'));
   assert.ok(line, 'disclosure blockquote not found in docs/04-identity.md');
   const docText = line.trim().replace(/^>\s*/, '');
   assert.equal(decodeEntities(DISCLOSURE), docText);

@@ -16,6 +16,7 @@
 - All repos public (Free plan; Pages and unlimited CI need public repos).
 - Licence: MIT for code; CC-BY-4.0 for content. No package registries.
 - Disclosure text (verbatim, from `docs/04-identity.md`): "Marigold Builds is Claude, an AI model by Anthropic, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom sets the calendar, can veto each brief, merges every day's posts before they go out, and is accountable for what ships."
+  - **Superseded:** BOARD Decided 17/18 — this wording is superseded; current text names the model on the disclosure page only and drops "Dom sets the calendar" (false since Decided 16). See `docs/04-identity.md` and `site-build/lib/html.js`.
 - Identity colour: `#F4A300`. SDG colours (official): 1 `#E5243B`, 2 `#DDA63A`, 3 `#4C9F38`, 4 `#C5192D`, 5 `#FF3A21`, 6 `#26BDE2`, 7 `#FCC30B`, 8 `#A21942`, 9 `#FD6925`, 10 `#DD1367`, 11 `#FD9D24`, 12 `#BF8B2E`, 13 `#3F7E44`, 14 `#0A97D9`, 15 `#56C02B`, 16 `#00689D`, 17 `#19486A`.
 - Tiles use SDG number, title and colour only. Do not reproduce the SDG icon graphics.
 - No emoji in READMEs. No "AI-powered" wording. No build-speed claims.

@@ -33,16 +33,16 @@ At the start of Discover (20:45), the builder lists issues labelled `triage` and
 ## Templates
 
 **Scored (real):**
-> Thank you, this is a real need and we have scored it for the calendar. Score: N/18 (named user N, impact N, gap N, buildability N, data N, story N). What would move it up: <one line>. If we build it you will hear from us at the contact you gave. Built by Marigold Builds (Claude), directed by Dom; this comment is one of four approved templates.
+> Thank you, this is a real need and we have scored it for the calendar. Score: N/18 (named user N, impact N, gap N, buildability N, data N, story N). What would move it up: <one line>. If we build it you will hear from us at the contact you gave. Built by Marigold Builds, an AI, directed by Dom; this comment is one of four approved templates.
 
 **Needs detail:**
-> Thank you. To score this we need one more thing: <the missing item: the step-by-step workflow / who else has the problem and where they gather / a link that shows the organisation or the problem>. Reply here and we will re-triage the next night. Built by Marigold Builds (Claude), directed by Dom; this comment is one of four approved templates.
+> Thank you. To score this we need one more thing: <the missing item: the step-by-step workflow / who else has the problem and where they gather / a link that shows the organisation or the problem>. Reply here and we will re-triage the next night. Built by Marigold Builds, an AI, directed by Dom; this comment is one of four approved templates.
 
 **Out of scope:**
-> Thank you for describing this. It is a real problem but not one a one-night open-source tool can honestly solve, because <hosting / personal data / advice / size>. <Optional: an existing tool that does this is X.> Closing so the list stays honest. Built by Marigold Builds (Claude), directed by Dom; this comment is one of four approved templates.
+> Thank you for describing this. It is a real problem but not one a one-night open-source tool can honestly solve, because <hosting / personal data / advice / size>. <Optional: an existing tool that does this is X.> Closing so the list stays honest. Built by Marigold Builds, an AI, directed by Dom; this comment is one of four approved templates.
 
 **Built:**
-> We built this last night: <repo link>. It does <one sentence>. It does not <limitation>. Please try it and tell us here what is wrong; you are the person it was built for. Built by Marigold Builds (Claude), directed by Dom; this comment is one of four approved templates.
+> We built this last night: <repo link>. It does <one sentence>. It does not <limitation>. Please try it and tell us here what is wrong; you are the person it was built for. Built by Marigold Builds, an AI, directed by Dom; this comment is one of four approved templates.
 
 ## From request to calendar
 

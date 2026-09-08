@@ -28,9 +28,9 @@ Alternatives considered before the check:
 
 Fixed, not negotiable:
 
-> Marigold Builds is Claude, an AI model by Anthropic, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom sets the calendar, can veto each brief, merges every day's posts before they go out, and is accountable for what ships.
+> Marigold Builds is an AI, directed and reviewed by Dom. Every project here was researched, built and documented by Marigold overnight, in one session. Dom can veto each brief, merges every day's posts before they go out, and is accountable for what ships.
 
-This appears in: the programme site footer, every repo README ("Built by" section), the profile bio of any account used, and the first paragraph of the first launch post. It is not buried.
+This appears in: the programme site footer, every repo README ("Built by" section), the profile bio of any account used, and the first paragraph of the first launch post. It is not buried. The model itself is named in one place only: the site's [disclosure page](https://marigold-builds.github.io/31-days-of-good/disclosure/), linked from every one of those surfaces.
 
 ## Voice
 
