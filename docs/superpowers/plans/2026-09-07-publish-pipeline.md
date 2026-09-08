@@ -103,7 +103,7 @@ Tasks 1, 2 and 4 have no dependencies; 3 needs 1 and 2; 5, 6 and 7 need 4 (7 als
 
 - [ ] **Step 2: Write the fixture queue item and article**
 
-`publish/test/fixtures/queue/2026-10-01-day-01.md` (the Bluesky text is 298 graphemes; keep it exactly, a later test depends on it being under 300):
+`publish/test/fixtures/queue/2026-10-01-day-01.md` (the Bluesky text is 296 graphemes; keep it exactly, a later test depends on it being under 300):
 
 ```markdown
 ---
@@ -117,7 +117,7 @@ Day 1/31 · SDG 17
 sdg-badge: a badge and a checked SDG.yml so a repo can say which goal it serves.
 Target 17.6. Does not verify the claim.
 Try it, break it, or steward it: https://github.com/marigold-builds/sdg-badge
-Built by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood
+Built by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood
 
 ## mastodon
 
@@ -125,7 +125,7 @@ Day 1/31 · SDG 17
 sdg-badge: a badge and a checked SDG.yml so a repo can say which goal it serves.
 Target 17.6. Does not verify the claim.
 Try it, break it, or steward it: https://github.com/marigold-builds/sdg-badge
-Built by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood
+Built by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood
 
 ## linkedin
 
@@ -471,7 +471,7 @@ description: One sentence for the listing.
 
 ## What lint checks
 
-CI runs `node publish/cli.js lint` on every pull request, so a queue PR is red before Dom reads it if: a section name is unknown; `day` is out of range; both `day` and `image` are set; an image is attached without `alt`; `image` is missing, not a `.png`/`.jpg`, or over the size limit; the Bluesky post is over 300 graphemes; the Mastodon post is over 500 characters; a post is empty, lacks "Built by Marigold Builds (Claude)", contains an emoji, or says "AI-powered"; the article has no title, a title over 128 characters, no tags or more than four, a tag that is not lowercase letters and digits, an empty body, or a first paragraph that does not mention Claude.
+CI runs `node publish/cli.js lint` on every pull request, so a queue PR is red before Dom reads it if: a section name is unknown; `day` is out of range; both `day` and `image` are set; an image is attached without `alt`; `image` is missing, not a `.png`/`.jpg`, or over the size limit; the Bluesky post is over 300 graphemes; the Mastodon post is over 500 characters; a post is empty, lacks "Built by Marigold Builds, an AI, directed by Dom.", contains an emoji, or says "AI-powered"; the article has no title, a title over 128 characters, no tags or more than four, a tag that is not lowercase letters and digits, an empty body, or a first paragraph that does not mention Claude.
 
 ## What the workflow does
 
@@ -552,7 +552,7 @@ test('facets use UTF-8 byte offsets, so a two-byte character before a link shift
 });
 
 test('facets for the launch template shape are in text order', () => {
-  const f = facets('Day 1/31 · SDG 17\nTry it: https://github.com/marigold-builds/sdg-badge\nBuilt by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood');
+  const f = facets('Day 1/31 · SDG 17\nTry it: https://github.com/marigold-builds/sdg-badge\nBuilt by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood');
   assert.deepEqual(f.map((x) => x.features[0].$type), ['app.bsky.richtext.facet#link', 'app.bsky.richtext.facet#tag', 'app.bsky.richtext.facet#tag']);
   assert.equal(f[0].index.byteStart, Buffer.byteLength('Day 1/31 · SDG 17\nTry it: '));
 });
@@ -697,7 +697,7 @@ export function fakePng(width = 1200, height = 630) {
 }
 
 export function fixtureItem(overrides = {}) {
-  const text = 'Day 1/31 · SDG 17\nTry it: https://github.com/marigold-builds/sdg-badge\nBuilt by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds';
+  const text = 'Day 1/31 · SDG 17\nTry it: https://github.com/marigold-builds/sdg-badge\nBuilt by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds';
   return {
     id: '2026-10-01-day-01', date: '2026-10-01', slug: 'day-01', day: 1, alt: 'Day 1 tile', image: null,
     meta: { day: '1', alt: 'Day 1 tile' }, sections: { bluesky: text, mastodon: text }, posts: { bluesky: text, mastodon: text },
@@ -736,13 +736,13 @@ test('lint rejects an unknown section', () => {
 });
 
 test('lint rejects a post over 300 graphemes', () => {
-  const long = `${'x'.repeat(290)} Built by Marigold Builds (Claude)`;
+  const long = `${'x'.repeat(290)} Built by Marigold Builds, an AI`;
   const item = fixtureItem({ posts: { bluesky: long } });
   assert.ok(lintItem(item, { root: ROOT }).some((e) => /bluesky: 3\d\d graphemes, limit 300/.test(e)));
 });
 
 test('lint counts Mastodon links as 23 characters against a 500 limit', () => {
-  const ok = `${'x'.repeat(440)} https://example.org/${'y'.repeat(200)} Marigold Builds (Claude)`;
+  const ok = `${'x'.repeat(440)} https://example.org/${'y'.repeat(200)} Marigold Builds, an AI`;
   const item = fixtureItem({ posts: { mastodon: ok } });
   assert.ok(!lintItem(item, { root: ROOT }).some((e) => e.startsWith('mastodon:')), 'a long URL counts as 23');
 });
@@ -810,8 +810,8 @@ export const DEVTO_MAX_TAGS = 4;
 export const DEVTO_MAX_TITLE = 128;
 
 // The short-form disclosure from docs/05-marketing-playbook.md:
-// "Built by Marigold Builds (Claude), directed by Dom."
-export const DISCLOSURE_SHORT = /Marigold Builds \(Claude\)/;
+// "Built by Marigold Builds, an AI, directed by Dom."
+export const DISCLOSURE_SHORT = /Marigold Builds, an AI, directed by Dom\./;
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
 const AI_POWERED_RE = /AI[- ]powered/i;
 const DEVTO_TAG_RE = /^[a-z0-9]+$/;
@@ -823,7 +823,7 @@ function checkVoice(label, text, errors) {
 
 function checkPost(label, text, errors) {
   if (text.length === 0) errors.push(`${label}: section is empty`);
-  if (!DISCLOSURE_SHORT.test(text)) errors.push(`${label}: missing the disclosure "Built by Marigold Builds (Claude), directed by Dom."`);
+  if (!DISCLOSURE_SHORT.test(text)) errors.push(`${label}: missing the disclosure "Built by Marigold Builds, an AI, directed by Dom."`);
   checkVoice(label, text, errors);
 }
 
@@ -1755,7 +1755,7 @@ test('an authentication failure is reported once per channel and does not stop t
 
 test('only restricts the run to one item', async () => {
   const r = repo();
-  writeFileSync(join(r.queueDir, '2026-10-04-digest.md'), '---\n---\n## bluesky\nDigest. Built by Marigold Builds (Claude), directed by Dom.\n');
+  writeFileSync(join(r.queueDir, '2026-10-04-digest.md'), '---\n---\n## bluesky\nDigest. Built by Marigold Builds, an AI, directed by Dom.\n');
   const b = channel('bluesky');
   const report = await run({ ...r, env: {}, mode: 'live', only: '2026-10-04-digest', fetch: null, now, channels: [b] });
   assert.deepEqual(b.calls.map((c) => c.item), ['2026-10-04-digest']);
@@ -2423,7 +2423,7 @@ Day NN/31 · SDG N
 <project-name>: <one sentence, who and what>.
 Target N.N. Does not <limitation>.
 Try it, break it, or steward it: https://github.com/marigold-builds/<repo>
-Built by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood
+Built by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood
 
 ## mastodon
 
@@ -2431,7 +2431,7 @@ Day NN/31 · SDG N
 <project-name>: <one sentence, who and what>.
 Target N.N. Does not <limitation>.
 Try it, break it, or steward it: https://github.com/marigold-builds/<repo>
-Built by Marigold Builds (Claude), directed by Dom. #MarigoldBuilds #31DaysOfGood
+Built by Marigold Builds, an AI, directed by Dom. #MarigoldBuilds #31DaysOfGood
 
 ## linkedin
 
@@ -2520,7 +2520,7 @@ test('templates/launch-post.md is a queue item with the sections the pipeline kn
   const item = parseQueueFile(readFileSync(join(TEMPLATES, 'launch-post.md'), 'utf8'), 'queue/2026-10-NN-day-NN.md'.replace(/NN/g, '01'));
   assert.deepEqual(Object.keys(item.sections), ['bluesky', 'mastodon', 'linkedin', 'outreach', 'provider', 'notes']);
   for (const name of Object.keys(item.sections)) assert.ok(KNOWN_SECTIONS.includes(name), `unknown section ${name}`);
-  assert.match(item.posts.bluesky, /Built by Marigold Builds \(Claude\), directed by Dom\. #MarigoldBuilds #31DaysOfGood$/);
+  assert.match(item.posts.bluesky, /Built by Marigold Builds, an AI, directed by Dom\. #MarigoldBuilds #31DaysOfGood$/);
   assert.equal(item.posts.bluesky, item.posts.mastodon);
   assert.match(item.alt, /^Day NN of 31 Days of Good/);
 });
@@ -2750,7 +2750,7 @@ Things found while planning that the documents get wrong or leave unresolvable; 
 
 1. **`queue/YYYY-MM-DD.md` cannot hold both a Sunday digest and that day's launch** (`docs/05`, `docs/02`, `templates/launch-post.md`). The plan uses `queue/YYYY-MM-DD-<slug>.md`.
 2. **botsin.space closed in 2024**; `docs/05` still offers "botsin.space-style instances". Wording fixed; mastodon.social is the live example.
-3. **"≤ 300 chars" in `templates/launch-post.md` is not what Bluesky counts.** It counts graphemes, does not shorten links, and the template's fixed text alone is about 200 graphemes. The rewritten template says what is left for the variable parts. The fixture in Task 1 is a worked example at 298.
+3. **"≤ 300 chars" in `templates/launch-post.md` is not what Bluesky counts.** It counts graphemes, does not shorten links, and the template's fixed text alone is about 200 graphemes. The rewritten template says what is left for the variable parts. The fixture in Task 1 is a worked example at 296.
 4. **The tile is not on Pages when the pipeline runs.** `pages` and `publish` trigger on the same push; the plan builds the tile inside `publish` from the same commit rather than fetching it. For the same reason the dev.to article carries no cover image URL in this version (open question 5).
 5. **`docs/02` says the long-form post goes to "dev.to / programme site"**; the site does not render articles and this plan does not add that. dev.to is the article's home (open question 6).
 6. **A re-run of a failed workflow checks out the original SHA by default**, which would not see receipts pushed by the first attempt and would post again. The plan checks out `github.ref` explicitly; this is the kind of detail a reviewer should verify in `publish.yml` rather than trust.
