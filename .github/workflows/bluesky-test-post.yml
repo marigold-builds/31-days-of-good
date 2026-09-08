@@ -104,7 +104,10 @@ jobs:
                 --request POST 'https://bsky.social/xrpc/com.atproto.server.createSession' \
                 --header 'Content-Type: application/json' \
                 --data @-
-          )
+          ) || {
+            echo "::error::Bluesky authentication did not complete (network error or curl failure). No post has been created."
+            exit 1
+          }
 
           if ! jq empty "$session_file" >/dev/null 2>&1; then
             echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON during authentication. Refusing to print it. No post has been created."
@@ -148,7 +151,10 @@ jobs:
                 --header 'Content-Type: application/json' \
                 --header "Authorization: Bearer ${access_jwt}" \
                 --data @-
-          )
+          ) || {
+            echo "::error::The request to create the post did not complete (network error or curl failure). The request may or may not have reached Bluesky. A post MAY NOW EXIST on the account. Check https://bsky.app/profile/${handle} directly to confirm whether the post was created, and do not re-run until you have verified what exists."
+            exit 1
+          }
 
           if ! jq empty "$create_file" >/dev/null 2>&1; then
             echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while creating the post. Refusing to print it. WHETHER A POST WAS CREATED IS UNKNOWN -- check https://bsky.app/profile/${handle} manually."
@@ -189,7 +195,10 @@ jobs:
             curl --silent --show-error --output "$get_file" --write-out '%{http_code}' \
                 --request GET "https://bsky.social/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=app.bsky.feed.post&rkey=${rkey}" \
                 --header "Authorization: Bearer ${access_jwt}"
-          )
+          ) || {
+            echo "::error::Verification of the post did not complete (network error or curl failure). THE POST ABOVE EXISTS (${record_uri}) but could not be verified by read-back. Check it manually."
+            exit 1
+          }
 
           if ! jq empty "$get_file" >/dev/null 2>&1; then
             echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while verifying the post. Refusing to print it. THE POST ABOVE EXISTS (${record_uri}) but could not be verified by read-back -- check it manually."
@@ -230,7 +239,10 @@ jobs:
                 --header 'Content-Type: application/json' \
                 --header "Authorization: Bearer ${access_jwt}" \
                 --data @-
-          )
+          ) || {
+            echo "::error::Deletion of the post did not complete (network error or curl failure). THE POST ABOVE STILL EXISTS (${record_uri}) -- it was verified but deletion status is unknown. Check and delete it manually if needed."
+            exit 1
+          }
 
           if ! jq empty "$delete_file" >/dev/null 2>&1; then
             echo "::error::Bluesky returned HTTP ${http_status} with a response body that was not valid JSON while deleting the post. Refusing to print it. THE POST ABOVE STILL EXISTS (${record_uri}) -- it was verified but deletion status is UNKNOWN. Check and delete it manually if needed."
