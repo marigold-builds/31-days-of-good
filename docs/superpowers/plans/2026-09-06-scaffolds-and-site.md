@@ -154,6 +154,8 @@ Expected: repo URL printed; `git log origin/main` shows the commit.
 
 - [ ] **Step 3: Write `data/calendar.json`** (31 entries; transcribed from `backlog/calendar.md`)
 
+  **Superseded:** BOARD Decided 21 — the `sdg`, `archetype` and `seed` fields in this schema were removed after launch (decision to make every night start from zero). Current `data/calendar.json` carries only `day` and `date`.
+
 ```json
 [
  {"day":1,"date":"2026-10-01","sdg":[17],"observance":"Launch day; International Day of Older Persons","archetype":"GitHub Action + badge","seed":"sdg-badge"},
